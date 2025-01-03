@@ -1,0 +1,38 @@
+---
+import Generator from '@/components/Generator';
+---
+
+<header class="bg-gray-700">
+    <div class="p-4 pt-0" style=`background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(148 163 184 / 0.05)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e")`>
+        <div class=" text-right p-2">
+            <a
+                href='https://github.com/CH563/fakemail'
+                target='_blank'
+                class='inline-block bg-gray-900/50 rounded-full px-2 py-1 hover:bg-white/10'
+            >
+                <span
+                    class='inline-block w-5 h-5 align-middle'
+                    style=`background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1naXRodWIiPjxwYXRoIGQ9Ik0xNSAyMnYtNGE0LjggNC44IDAgMCAwLTEtMy41YzMgMCA2LTIgNi01LjUuMDgtMS4yNS0uMjctMi40OC0xLTMuNS4yOC0xLjE1LjI4LTIuMzUgMC0zLjUgMCAwLTEgMC0zIDEuNS0yLjY0LS41LTUuMzYtLjUtOCAwQzYgMiA1IDIgNSAyYy0uMyAxLjE1LS4zIDIuMzUgMCAzLjVBNS40MDMgNS40MDMgMCAwIDAgNCA5YzAgMy41IDMgNS41IDYgNS41LS4zOS40OS0uNjggMS4wNS0uODUgMS42NS0uMTcuNi0uMjIgMS4yMy0uMTUgMS44NXY0Ii8+PHBhdGggZD0iTTkgMThjLTQuNTEgMi01LTItNy0yIi8+PC9zdmc+");background-size:100%`
+                ></span>
+            </a>
+        </div>
+        <div class='container mx-auto max-w-3xl'>
+            <div class='pt-4'>
+                <img class='mx-auto w-10' src='/favicon.svg' alt='Fakeact' title="Fakeact" />
+            </div>
+            <h1 class='font-extrabold text-center text-xl pb-6 text-green-500'>
+                FakeMail
+            </h1>
+            <h2 class='text-gray-100 font-semibold text-3xl text-center mb-4'>
+                Fake email generator,<br /> delete emails 2 hours after receiving
+            </h2>
+            <p class='text-gray-400 text-sm text-center mb-4'>
+                👋 Forget about spam, advertising mailings, hacking and attacking robots. Keep your real mailbox clean and secure. Temp Mail provides temporary, secure, anonymous, free, disposable email address.
+            </p>
+            <h2 class='text-gray-100 font-semibold text-xl text-center mb-2'>Your Temporary Email Address</h2>
+            <div class="border border-dashed bg-gray-500/10 border-gray-500 rounded-xl p-4 mb-4 min-h-[84px]">
+                <Generator client:load />
+            </div>
+        </div>
+    </div>
+</header>
