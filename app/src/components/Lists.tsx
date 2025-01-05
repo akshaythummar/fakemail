@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
-import { Inbox } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Inbox, Mail } from 'lucide-react';
 
 export default () => {
     const [mails, setMails] = useState([]);
     const [stats, setStats] = useState({});
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const intervalId = useRef<number>(0);
     const fetchData = async () => {
         try {
             const address = localStorage.getItem('receivingEmail');
@@ -23,7 +24,22 @@ export default () => {
     };
     useEffect(() => {
         fetchData();
+        intervalId.current = setInterval(fetchData, 20 * 1000);
+        return () => {
+            clearInterval(intervalId.current);
+        };
     }, []);
+    if (mails.length) {
+        return mails.map((mail: any) => (
+            <div key={mail.suffix} className='border border-gray-400 rounded-xl p-4 grid gap-1'>
+                <div className='flex gap-1 items-center text-xs'><Mail size={16} />{mail.sender}</div>
+                <div className='text-sm font-semibold'>{mail.subject}</div>
+                <div className='pt-4 border-t leading-4 text-sm'>
+                    <div dangerouslySetInnerHTML={{ __html: mail['content-plain-formatted'] }}></div>
+                </div>
+            </div>
+        ));
+    }
     return (
         <div className='border border-dashed border-gray-400 rounded-xl p-4'>
             <div className='text-center text-gray-400'>
