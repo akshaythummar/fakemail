@@ -36,7 +36,7 @@ export default () => {
                 <div className='text-sm font-semibold'>{mail.subject}</div>
                 <div className='text-xs text-gray-600'>{mail.date}</div>
                 <div className='pt-4 border-t leading-4 text-sm'>
-                    <div dangerouslySetInnerHTML={{ __html: mail['content-plain-formatted'] }}></div>
+                    <div dangerouslySetInnerHTML={{ __html: mail['content-plain-formatted'] || mail['content-plain'] || mail['content-html'] }}></div>
                 </div>
             </div>
         ));
