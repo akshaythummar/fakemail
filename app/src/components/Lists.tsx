@@ -19,7 +19,7 @@ export default () => {
     const intervalId = useRef<any>(null);
     const intervalStop = useRef<number>(0);
     const fetchData = async () => {
-        if (intervalStop.current > 20) clearInterval(intervalId.current);
+        if (intervalStop.current > 15) clearInterval(intervalId.current);
         try {
             const address = localStorage.getItem('receivingEmail');
             if (!address) return;
