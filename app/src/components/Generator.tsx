@@ -17,7 +17,6 @@ import {
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-    AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
 import { useGeneratorMail } from '@/hooks/useGeneratorMail';
@@ -54,7 +53,7 @@ export default () => {
                         />
                     </TooltipTrigger>
                     <TooltipContent>
-                        <p>Your temporary email address</p>
+                        <p>Your fake email address</p>
                     </TooltipContent>
                 </Tooltip>
             </TooltipProvider>

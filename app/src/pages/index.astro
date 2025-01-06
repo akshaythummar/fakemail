@@ -11,3 +11,24 @@ import Layout from '../layouts/Layout.astro';
     <Main />
     <Footer />
 </Layout>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Fake Mail",
+    "description": "Fake email generator, delete emails 2 hours after receiving",
+    "operatingSystem": "ALL",
+    "applicationCategory": "BrowserApplication",
+    "browserRequirements": "requires HTML5 support",
+    "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.6",
+        "ratingCount": "4872",
+        "bestRating": "5"
+    },
+    "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+    }
+})}/>
