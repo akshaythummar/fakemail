@@ -5,7 +5,7 @@ export default () => {
     const [mails, setMails] = useState([]);
     const [stats, setStats] = useState({});
     const [loading, setLoading] = useState<boolean>(false);
-    const intervalId = useRef<number>(0);
+    const intervalId = useRef<any>(null);
     const fetchData = async () => {
         try {
             const address = localStorage.getItem('receivingEmail');
@@ -34,6 +34,7 @@ export default () => {
             <div key={mail.suffix} className='border border-gray-400 rounded-xl p-4 grid gap-1'>
                 <div className='flex gap-1 items-center text-xs'><Mail size={16} />{mail.sender}</div>
                 <div className='text-sm font-semibold'>{mail.subject}</div>
+                <div className='text-xs text-gray-600'>{mail.date}</div>
                 <div className='pt-4 border-t leading-4 text-sm'>
                     <div dangerouslySetInnerHTML={{ __html: mail['content-plain-formatted'] }}></div>
                 </div>

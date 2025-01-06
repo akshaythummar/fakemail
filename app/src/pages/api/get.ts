@@ -1,35 +1,73 @@
-import type { APIRoute } from 'astro';
+import type { APIRoute, APIContext } from 'astro';
 
-const url = 'https://temp-mail-service.wonderful563.workers.dev/';
+// const testData = JSON.stringify({
+//     status: 'ok',
+//     code: 200,
+//     msg: 'Mail available',
+//     stats: { count: '1' },
+//     mails: [
+//         {
+//             suffix: '5cc52bcf',
+//             recipient: 'men.strip311@fakeact.fun',
+//             sender: 'wonderful563@gmail.com',
+//             subject: 'Fwd: Your verification code is 662144',
+//             'content-plain':
+//                 '[image: Banana Game Logo] Verification Code\n\nEnter this code to continue the verification process:\n662144\n\nYour code will remain valid for 10 minutes. Do NOT share with anyone.\nIf you have any questions, contact support at support@carv.io\n\n',
+//             'content-plain-formatted':
+//                 '[image: Banana Game Logo] Verification Code<br><br>Enter this code to continue the verification process:<br>662144<br><br>Your code will remain valid for 10 minutes. Do NOT share with anyone.<br>If you have any questions, contact support at support@carv.io<br><br>',
+//             'content-html':
+//                 '<div dir="ltr"><div class="gmail_quote gmail_quote_container"><div dir="ltr" class="gmail_attr"><br></div><br><br>\n<u></u>\n\n\n\n\n<div>\n<table width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:600px;margin:auto;background-color:#ffffff">\n  <tbody><tr>\n    <td style="padding:20px 20px 10px 20px;text-align:center">\n    <img src="https://public.carv.io/game/banana/banana-logo.webp" alt="Banana Game Logo" width="100" height="auto" style="margin-bottom:20px">\n      <h1 style="margin:0;font-size:24px;font-family:Arial,sans-serif;color:#333333">Verification Code</h1>\n    </td>\n  </tr>\n  <tr>\n    <td style="padding:0 20px 20px">\n      <p style="font-family:Arial,sans-serif;font-size:16px;color:#666666;text-align:center">Enter this code to continue the verification process:</p>\n      <table cellspacing="0" cellpadding="0" border="0" style="background-color:#f8f8f8;margin:20px auto;padding:10px 30px;border-radius:4px">\n        <tbody><tr>\n          <td style="font-family:Arial,sans-serif;font-size:36px;color:#333333;text-align:center;letter-spacing:10px">\n662144\n</td>\n        </tr>\n      </tbody></table>\n      <p style="font-family:Arial,sans-serif;font-size:14px;color:#666666;text-align:center">\n        Your code will remain valid for 10 minutes. Do NOT share with anyone.<br>\n        If you have any questions, contact support at <a href="mailto:support@carv.io" style="color:#0000ee;text-decoration:none" target="_blank">support@carv.io</a>\n      </p>\n    </td>\n  </tr>\n</tbody></table>\n</div>\n\n</div></div>\n\n',
+//             date: '2025-01-05T14:58:45.000Z',
+//         },
+//     ],
+// });
 
-export const GET: APIRoute = async ({ request }) => {
+export const GET: APIRoute = async ({ url, params, request, locals }: APIContext) => {
     const address = new URL(request.url).searchParams.get('address');
-    // try {
-    //     const response = await fetch(`${url}/mail/get?address=${address}`);
-    //     return response;
-    // } catch (error) {
+    // if (address === 'worry.alone517@fakeact.fun') {
+    //     return new Response(testData);
     // }
-    return new Response(
-        JSON.stringify({
+    if (address === undefined || address === '') {
+        return new Response(JSON.stringify({
+            status: 'bad request',
+            code: 400,
+            msg: "'address' query required!",
+        }));
+    }
+
+    // get mails with prefix (user@example.com) - suffix (-8dh2m901) acts as identifier
+    const res = await locals.runtime.env.POST_DB?.list({ prefix: address });
+    const statsCount = await locals.runtime.env.POST_DB?.get('stats-count');
+
+    // if no emails are stored under the prefix key, return empty json
+    if (!res || res['keys'].length === 0) {
+        return new Response(JSON.stringify({
             status: 'ok',
             code: 200,
-            msg: 'Mail available',
-            stats: { count: '1' },
-            mails: [
-                {
-                    suffix: '5cc52bcf',
-                    recipient: 'men.strip311@fakeact.fun',
-                    sender: 'wonderful563@gmail.com',
-                    subject: 'Fwd: Your verification code is 662144',
-                    'content-plain':
-                        '[image: Banana Game Logo] Verification Code\n\nEnter this code to continue the verification process:\n662144\n\nYour code will remain valid for 10 minutes. Do NOT share with anyone.\nIf you have any questions, contact support at support@carv.io\n\n',
-                    'content-plain-formatted':
-                        '[image: Banana Game Logo] Verification Code<br><br>Enter this code to continue the verification process:<br>662144<br><br>Your code will remain valid for 10 minutes. Do NOT share with anyone.<br>If you have any questions, contact support at support@carv.io<br><br>',
-                    'content-html':
-                        '<div dir="ltr"><div class="gmail_quote gmail_quote_container"><div dir="ltr" class="gmail_attr"><br></div><br><br>\n<u></u>\n\n\n\n\n<div>\n<table width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:600px;margin:auto;background-color:#ffffff">\n  <tbody><tr>\n    <td style="padding:20px 20px 10px 20px;text-align:center">\n    <img src="https://public.carv.io/game/banana/banana-logo.webp" alt="Banana Game Logo" width="100" height="auto" style="margin-bottom:20px">\n      <h1 style="margin:0;font-size:24px;font-family:Arial,sans-serif;color:#333333">Verification Code</h1>\n    </td>\n  </tr>\n  <tr>\n    <td style="padding:0 20px 20px">\n      <p style="font-family:Arial,sans-serif;font-size:16px;color:#666666;text-align:center">Enter this code to continue the verification process:</p>\n      <table cellspacing="0" cellpadding="0" border="0" style="background-color:#f8f8f8;margin:20px auto;padding:10px 30px;border-radius:4px">\n        <tbody><tr>\n          <td style="font-family:Arial,sans-serif;font-size:36px;color:#333333;text-align:center;letter-spacing:10px">\n662144\n</td>\n        </tr>\n      </tbody></table>\n      <p style="font-family:Arial,sans-serif;font-size:14px;color:#666666;text-align:center">\n        Your code will remain valid for 10 minutes. Do NOT share with anyone.<br>\n        If you have any questions, contact support at <a href="mailto:support@carv.io" style="color:#0000ee;text-decoration:none" target="_blank">support@carv.io</a>\n      </p>\n    </td>\n  </tr>\n</tbody></table>\n</div>\n\n</div></div>\n\n',
-                    date: '2025-01-05T14:58:45.000Z',
-                },
-            ],
-        })
-    );
+            msg: 'No available emails',
+            stats: {
+                count: statsCount,
+            },
+            mails: [],
+        }));
+    }
+
+    // create array of received mails
+    let mails = [];
+    for (const key of res['keys']) {
+        const mail_res = await locals.runtime.env.POST_DB.get(key['name']);
+        // convert string back to JSON
+        // @ts-ignore
+        mails.push(JSON.parse(mail_res));
+    }
+
+    return new Response(JSON.stringify({
+        status: 'ok',
+        code: 200,
+        msg: 'Mail available',
+        stats: {
+            count: statsCount,
+        },
+        mails,
+    }));
 };
