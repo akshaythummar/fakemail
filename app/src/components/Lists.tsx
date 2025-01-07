@@ -28,7 +28,6 @@ export default () => {
             if (!response.ok) {
                 throw new Error('Network response was not ok.');
             }
-            await new Promise((resolve) => setTimeout(resolve, 2000));
             setCountDown(30);
             countDownId.current = setInterval(() => {
                 setCountDown((prevCount) => prevCount - 1);
@@ -89,7 +88,7 @@ export default () => {
                         key={mail.suffix}
                         sender={mail.sender}
                         subject={mail.subject}
-                        date={dayjs.utc(mail.date).format('YYYY-MM-DD HH:mm:ss')}
+                        date={dayjs.utc(mail.date).local().format('YYYY-MM-DD HH:mm:ss')}
                         content={mail['content-plain-formatted'] || mail['content-plain'] || mail['content-html']}
                         defaultShow={index === 0}
                         toDelete={() => toDelete(mail)}
@@ -103,7 +102,7 @@ export default () => {
             <div className='flex justify-between items-center py-2'>
                 <h2 className="text-center font-semibold flex gap-1 items-center"><Mails size={18} />Mail Inbox{mails.length ? `(${mails.length})` : ''}</h2>
                 <div className='flex gap-2 items-center'>
-                {intervalStop.current < 15 && <div className='flex items-center text-xs text-gray-500'><div className="animate-ping w-1 h-1 rounded-full bg-green-600 mr-2" /> Refresh after <span className='text-green-600 mx-1'>{countDown}</span> s</div>}
+                {(intervalStop.current < 15 && !loading) && <div className='flex items-center text-xs text-gray-500'><div className="animate-ping w-1 h-1 rounded-full bg-green-600 mr-2" /> Refresh after <span className='text-green-600 mx-1'>{countDown}</span> s</div>}
                     <Button size='xs' variant='outline' onClick={refresh} disabled={loading}>
                         {loading ? <Loader2 className="animate-spin" /> : <RefreshCw />}
                     </Button>
