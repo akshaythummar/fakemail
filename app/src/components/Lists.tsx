@@ -2,32 +2,37 @@ import { useState, useEffect, useRef } from 'react';
 import { Inbox, Mails, RefreshCw, Loader2 } from 'lucide-react';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import { MailCard } from '@/components/ui/mail-card';
 import { Button } from '@/components/ui/button';
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner"
 
 dayjs.extend(utc);
-dayjs.extend(relativeTime);
 
 export default () => {
     const [mails, setMails] = useState([]);
     const [stats, setStats] = useState<any>({});
-    const [getTime, setGetTime] = useState<Date>(new Date());
     const [loading, setLoading] = useState<boolean>(false);
     const intervalId = useRef<any>(null);
+    const countDownId = useRef<any>(null);
     const intervalStop = useRef<number>(0);
+    const [countDown, setCountDown] = useState<number>(30);
     const fetchData = async () => {
+        clearInterval(countDownId.current);
         if (intervalStop.current > 15) clearInterval(intervalId.current);
         try {
             const address = localStorage.getItem('receivingEmail');
             if (!address) return;
+            setLoading(true);
             const response = await fetch(`/api/get?address=${address}`); // Replace with your API endpoint
             if (!response.ok) {
                 throw new Error('Network response was not ok.');
             }
-            setGetTime(new Date());
+            await new Promise((resolve) => setTimeout(resolve, 2000));
+            setCountDown(30);
+            countDownId.current = setInterval(() => {
+                setCountDown((prevCount) => prevCount - 1);
+            }, 1000);
             intervalStop.current = intervalStop.current++;
             const data = await response.json();
             if (data.mails && data.mails.length) {
@@ -96,9 +101,9 @@ export default () => {
     return (
         <>
             <div className='flex justify-between items-center py-2'>
-                <h2 className="text-center font-semibold flex gap-1 items-center"><Mails size={18} />Mail Inbox{mails.length?`(${mails.length})`:''}</h2>
+                <h2 className="text-center font-semibold flex gap-1 items-center"><Mails size={18} />Mail Inbox{mails.length ? `(${mails.length})` : ''}</h2>
                 <div className='flex gap-2 items-center'>
-                    <div className='text-xs text-gray-400'>{dayjs(getTime).fromNow()}</div>
+                {intervalStop.current < 15 && <div className='flex items-center text-xs text-gray-500'><div className="animate-ping w-1 h-1 rounded-full bg-green-600 mr-2" /> Refresh after <span className='text-green-600 mx-1'>{countDown}</span> s</div>}
                     <Button size='xs' variant='outline' onClick={refresh} disabled={loading}>
                         {loading ? <Loader2 className="animate-spin" /> : <RefreshCw />}
                     </Button>

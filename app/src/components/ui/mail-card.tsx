@@ -59,7 +59,7 @@ export const MailCard = ({
                     {date}
                 </div>
                 <Button
-                    variant='ghost'
+                    variant='outline'
                     size='sm'
                     className='shrink-0'
                     onClick={() => setShow(!show)}
