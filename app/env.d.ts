@@ -4,6 +4,8 @@ type KVNamespace = import('@cloudflare/workers-types').KVNamespace;
 type ENV = {
     POST_DB: KVNamespace;
     DKIM_PRIVATE_KEY: string;
+    PUBLIC_TURNSTILE_SITE_KEY: string;
+    SECRET_KEY: string;
 };
 
 // use a default runtime configuration (advanced mode).
