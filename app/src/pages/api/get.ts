@@ -15,11 +15,17 @@ export const GET: APIRoute = async ({ request, locals }: APIContext) => {
     }
 
     // get mails with prefix (user@example.com) - suffix (-8dh2m901) acts as identifier
-    const res = await locals.runtime.env.POST_DB?.list({ prefix: address });
+    const mailKeys = await locals.runtime.env.POST_DB?.get(`${address}-keys`);
     const statsCount = await locals.runtime.env.POST_DB?.get('stats-count');
+    let mailKeysArr: string[] = [];
+    try {
+        mailKeysArr = JSON.parse(mailKeys || '[]');
+    } catch (error) {
+        //
+    }
 
     // if no emails are stored under the prefix key, return empty json
-    if (!res || res['keys'].length === 0) {
+    if (!mailKeys || mailKeysArr.length === 0) {
         return new Response(JSON.stringify({
             status: 'ok',
             code: 200,
@@ -33,11 +39,11 @@ export const GET: APIRoute = async ({ request, locals }: APIContext) => {
 
     // create array of received mails
     let mails = [];
-    for (const key of res['keys']) {
-        const mail_res = await locals.runtime.env.POST_DB.get(key['name']);
+    for (const key of mailKeysArr) {
+        const mail_res = await locals.runtime.env.POST_DB.get(`${address}-${key}`);
         // convert string back to JSON
         // @ts-ignore
-        mails.push(JSON.parse(mail_res));
+        if (mail_res) mails.push(JSON.parse(mail_res));
     }
 
     return new Response(JSON.stringify({

@@ -22,8 +22,22 @@ export default {
         let sender = email.from.address;
         let recipient = email.to?.length ? email.to[0].address : '';
 
+        if (!recipient) return;
+
         // generate random string (len = 8)
         const suffix = Math.random().toString(16).slice(2, 10);
+
+        let keys = await env.POST_DB.get(`${recipient}-keys`);
+        if (!keys) {
+            keys = JSON.stringify([suffix]);
+        } else {
+            const _keys = JSON.parse(keys);
+            _keys.push(suffix);
+            keys = JSON.stringify(_keys);
+        }
+        await env.POST_DB.put(`${recipient}-keys`, keys, {
+            expirationTtl: 7200,
+        });
         // make key address followed by suffix (user@example.com-8dh2m901)
         // suffix acts as the key, while the email is used for assignment
         const key = recipient + '-' + suffix;
