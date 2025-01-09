@@ -41,12 +41,12 @@ export default () => {
             });
     };
     return (
-        <div className='flex items-center gap-3'>
+        <div className='flex flex-col items-center gap-3 sm:flex-row'>
             <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <Input
-                            className='flex-1 rounded-full border-none bg-slate-800/40 px-8 py-6 text-sm md:text-xl text-white'
+                            className='sm:flex-1 rounded-full border-none text-center sm:text-left bg-slate-800/40 px-8 py-6 text-sm md:text-xl text-white'
                             readOnly
                             onFocus={handleFocus}
                             value={address}
@@ -57,56 +57,58 @@ export default () => {
                     </TooltipContent>
                 </Tooltip>
             </TooltipProvider>
-            <TooltipProvider>
-                <Tooltip>
-                    <TooltipTrigger asChild>
-                        <Button
-                            variant='outline'
-                            className='rounded-full py-6 shrink-0'
-                            onClick={() => handleCopy(address)}
-                        >
-                            {isCopy ? <Check /> : <Copy />}
-                        </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                        <p>Copy to clipboard</p>
-                    </TooltipContent>
-                </Tooltip>
-            </TooltipProvider>
-            <TooltipProvider>
-                <Tooltip>
-                    <TooltipTrigger asChild>
-                        <Button
-                            variant='destructive'
-                            className='rounded-full py-6 shrink-0'
-                            onClick={() => setOpen(true)}
-                        >
-                            <RotateCw /> Change
-                        </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                        <p>Generator a new email address</p>
-                    </TooltipContent>
-                </Tooltip>
-            </TooltipProvider>
-            <AlertDialog open={open} onOpenChange={setOpen}>
-                <AlertDialogContent>
-                    <AlertDialogHeader>
-                        <AlertDialogTitle>
-                            Are you absolutely sure?
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                            This action cannot be undone. This will permanently delete your account and generate a new email address.
-                        </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction asChild>
-                            <Button onClick={generatorNewMail}>Yes, Generator a new email address</Button>
-                        </AlertDialogAction>
-                    </AlertDialogFooter>
-                </AlertDialogContent>
-            </AlertDialog>
+            <div className='flex gap-3 items-center'>
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button
+                                variant='outline'
+                                className='rounded-full py-6 px-8 shrink-0 sm:px-4'
+                                onClick={() => handleCopy(address)}
+                            >
+                                {isCopy ? <Check /> : <Copy />}
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Copy to clipboard</p>
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button
+                                variant='destructive'
+                                className='rounded-full py-6 shrink-0'
+                                onClick={() => setOpen(true)}
+                            >
+                                <RotateCw /> Change
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Generator a new email address</p>
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
+                <AlertDialog open={open} onOpenChange={setOpen}>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>
+                                Are you absolutely sure?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This action cannot be undone. This will permanently delete your account and generate a new email address.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction asChild>
+                                <Button onClick={generatorNewMail}>Yes, Generator a new email address</Button>
+                            </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+            </div>
         </div>
     );
 };
