@@ -7,14 +7,18 @@ import tailwind from '@astrojs/tailwind';
 
 import cloudflare from '@astrojs/cloudflare';
 
+import node from '@astrojs/node';
+
+import clerk from '@clerk/astro';
+
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
   site: 'https://mail.fakeact.fun',
   integrations: [react(), tailwind({
     applyBaseStyles: false,
-  })],
-  adapter: cloudflare(),
+  }), clerk()],
+  adapter: import.meta.env.PROD ? cloudflare() : node({ mode: "standalone" }),
   vite: {
     resolve: {
       // Use react-dom/server.edge instead of react-dom/server.browser for React 19.

@@ -1,10 +1,24 @@
 ---
+import {
+    SignIn,
+    SignedIn,
+    SignedOut,
+    UserButton,
+    SignInButton,
+    GoogleOneTap,
+} from '@clerk/astro/components';
 import Generator from '@/components/Generator';
 ---
 
 <header class="bg-gray-700">
     <div class="p-4 pt-0" style=`background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(148 163 184 / 0.05)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e")`>
-        <div class=" text-right p-2">
+        <SignedIn>
+            <UserButton />
+        </SignedIn>
+        <SignedOut>
+            <SignInButton mode="modal" />
+        </SignedOut>
+        <div class="text-right p-2">
             <a
                 href='https://github.com/CH563/fakemail'
                 target='_blank'
