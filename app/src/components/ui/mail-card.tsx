@@ -42,7 +42,7 @@ export const MailCard = ({
                 className
             )}
         >
-            <div className='flex items-center gap-2'>
+            <div className='flex gap-2 sm:flex-row sm:items-center flex-col'>
                 <div className='flex-1 grid gap-1'>
                     <div
                         className={cn(
@@ -55,17 +55,19 @@ export const MailCard = ({
                     </div>
                     <div className='text-sm font-semibold'>{subject}</div>
                 </div>
-                <div className='text-xs text-gray-600 shrink-0 whitespace-nowrap'>
-                    {date}
+                <div className='flex gap-1 justify-between border-t pt-1 sm:border-none sm:pt-0 items-center shrink-0'>
+                    <div className='text-xs text-gray-600 whitespace-nowrap'>
+                        {date}
+                    </div>
+                    <Button
+                        variant='outline'
+                        size='sm'
+                        className='shrink-0'
+                        onClick={() => setShow(!show)}
+                    >
+                        {show ? <ChevronUp /> : <ChevronDown />}
+                    </Button>
                 </div>
-                <Button
-                    variant='outline'
-                    size='sm'
-                    className='shrink-0'
-                    onClick={() => setShow(!show)}
-                >
-                    {show ? <ChevronUp /> : <ChevronDown />}
-                </Button>
             </div>
             {show && (
                 <div className='pt-4 border-t leading-4 text-sm'>
