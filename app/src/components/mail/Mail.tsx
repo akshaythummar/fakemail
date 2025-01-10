@@ -1,17 +1,41 @@
 import { useState } from 'react';
 import {
+    Archive,
+    ArchiveX,
+    File,
+    Inbox,
+    Search,
+    Send,
+    Trash2,
+    Copy,
+    Settings
+} from "lucide-react";
+import {
+    TooltipProvider,
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger
+} from '@/components/ui/tooltip';
+import {
     ResizableHandle,
     ResizablePanel,
     ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { Separator } from "@/components/ui/separator";
+import { Input } from "@/components/ui/input";
 import { cn } from '@/lib/utils';
+import { AccountSwitcher } from './AccountSwitcher';
+import { Nav } from './Nav';
+import { MailList } from './MailList';
+import { MailDisplay } from './MailDisplay';
+import { useMail } from './useMail';
+import { Button } from '../ui/button';
 
 
 interface MailProps {
     accounts: {
         label: string
         email: string
-        icon: React.ReactNode
     }[]
     mails: any[]
     defaultLayout: number[] | undefined
@@ -26,51 +50,121 @@ export default ({
     defaultCollapsed = false,
     navCollapsedSize,
 }: MailProps) => {
-    const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed)
+    const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
+    const [mail] = useMail();
     return (
-        <ResizablePanelGroup
-            direction="horizontal"
-            onLayout={(sizes: number[]) => {
-                document.cookie = `react-resizable-panels:layout:mail=${JSON.stringify(
-                    sizes
-                )}`
-            }}
-            className="h-full flex-1 items-stretch"
-        >
-            <ResizablePanel
-                defaultSize={defaultLayout[0]}
-                collapsedSize={navCollapsedSize}
-                collapsible={true}
-                minSize={15}
-                maxSize={20}
-                onCollapse={() => {
-                    setIsCollapsed(true)
-                    document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(true)}`
-                }}
-                onResize={() => {
-                    setIsCollapsed(false)
-                    document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-                        false
+        <TooltipProvider delayDuration={0}>
+            <ResizablePanelGroup
+                direction="horizontal"
+                onLayout={(sizes: number[]) => {
+                    document.cookie = `react-resizable-panels:layout:mail=${JSON.stringify(
+                        sizes
                     )}`
                 }}
-                className={cn(isCollapsed && "min-w-[50px] transition-all duration-300 ease-in-out")}
+                className="h-full flex-1 items-stretch"
             >
-                <div className="flex h-full items-center justify-center p-6">
-                    <span className="font-semibold">Sidebar</span>
-                </div>
-            </ResizablePanel>
-            <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-                <div className="flex h-full items-center justify-center p-6">
-                    <span className="font-semibold">List</span>
-                </div>
-            </ResizablePanel>
-            <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={defaultLayout[2]} minSize={30}>
-                <div className="flex h-full items-center justify-center p-6">
-                    <span className="font-semibold">Content</span>
-                </div>
-            </ResizablePanel>
-        </ResizablePanelGroup>
+                <ResizablePanel
+                    defaultSize={defaultLayout[0]}
+                    collapsedSize={navCollapsedSize}
+                    collapsible={true}
+                    minSize={15}
+                    maxSize={20}
+                    onCollapse={() => {
+                        setIsCollapsed(true)
+                        document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(true)}`
+                    }}
+                    onResize={() => {
+                        setIsCollapsed(false)
+                        document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
+                            false
+                        )}`
+                    }}
+                    className={cn("flex flex-col", isCollapsed && "min-w-[50px] transition-all duration-300 ease-in-out")}
+                >
+                    <div className={cn("flex h-[52px] items-center justify-center", isCollapsed ? "h-[52px]" : "px-2")}>
+                        <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} />
+                    </div>
+                    <Separator />
+                    <Nav
+                        isCollapsed={isCollapsed}
+                        links={[
+                            {
+                                title: "Inbox",
+                                label: "128",
+                                icon: Inbox,
+                                variant: "default",
+                            },
+                            {
+                                title: "Drafts",
+                                label: "9",
+                                icon: File,
+                                variant: "ghost",
+                            },
+                            {
+                                title: "Sent",
+                                label: "",
+                                icon: Send,
+                                variant: "ghost",
+                            },
+                            {
+                                title: "Trash",
+                                label: "",
+                                icon: Trash2,
+                                variant: "ghost",
+                            },
+                            {
+                                title: "Archive",
+                                label: "",
+                                icon: Archive,
+                                variant: "ghost",
+                            },
+                        ]}
+                    />
+                    <Separator />
+                    <div className='flex-1'></div>
+                    <div className='py-4 px-2'>
+                        <Button variant="outline" className='w-full'>
+                            <Settings />
+                            {isCollapsed ? '' : 'My Email Address'}
+                        </Button>
+                    </div>
+                </ResizablePanel>
+                <ResizableHandle withHandle />
+                <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
+                    <div className="flex items-center px-4 py-2">
+                        <h1 className="text-xl font-bold">Inbox</h1>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                    variant='ghost'
+                                    size='icon'
+                                    className='ml-auto'
+                                >
+                                    <Copy className='h-4 w-4' />
+                                    <span className='sr-only'>Copy</span>
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>Copy current mail address</TooltipContent>
+                        </Tooltip>
+                    </div>
+                    <Separator />
+                    <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+                        <form>
+                            <div className="relative">
+                            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                            <Input placeholder="Search" className="pl-8" />
+                            </div>
+                        </form>
+                    </div>
+                    <MailList items={mails} />
+                </ResizablePanel>
+                <ResizableHandle withHandle />
+                <ResizablePanel defaultSize={defaultLayout[2]} minSize={30}>
+                    <MailDisplay
+                        mail={mails.find((item) => item.id === mail.selected) || null}
+                    />
+                </ResizablePanel>
+            </ResizablePanelGroup>
+        </TooltipProvider>
     );
 };

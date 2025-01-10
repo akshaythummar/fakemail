@@ -46,7 +46,7 @@ export default () => {
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <Input
-                            className='sm:flex-1 rounded-full border-none text-center sm:text-left bg-slate-800/40 px-8 py-6 text-sm md:text-xl text-white'
+                            className='sm:flex-1 rounded-full border-none text-center sm:text-left bg-slate-800/40 dark:bg-slate-600/40 px-8 py-6 text-sm md:text-xl text-white'
                             readOnly
                             onFocus={handleFocus}
                             value={address}

@@ -1,41 +1,12 @@
 export const mails = [
   {
-    id: "6c84fb90-12c4-11e1-840d-7b25c5ee775a",
-    name: "William Smith",
-    email: "williamsmith@example.com",
-    subject: "Meeting Tomorrow",
-    text: "Hi, let's have a meeting tomorrow to discuss the project. I've been reviewing the project details and have some ideas I'd like to share. It's crucial that we align on our next steps to ensure the project's success.\n\nPlease come prepared with any questions or insights you may have. Looking forward to our meeting!\n\nBest regards, William",
-    date: "2023-10-22T09:00:00",
-    read: true,
-    labels: ["meeting", "work", "important"],
-  },
-  {
-    id: "110e8400-e29b-11d4-a716-446655440000",
-    name: "Alice Smith",
-    email: "alicesmith@example.com",
-    subject: "Re: Project Update",
-    text: "Thank you for the project update. It looks great! I've gone through the report, and the progress is impressive. The team has done a fantastic job, and I appreciate the hard work everyone has put in.\n\nI have a few minor suggestions that I'll include in the attached document.\n\nLet's discuss these during our next meeting. Keep up the excellent work!\n\nBest regards, Alice",
-    date: "2023-10-22T10:30:00",
-    read: true,
-    labels: ["work", "important"],
-  },
-  {
-    id: "3e7c3f6d-bdf5-46ae-8d90-171300f27ae2",
-    name: "Bob Johnson",
-    email: "bobjohnson@example.com",
-    subject: "Weekend Plans",
-    text: "Any plans for the weekend? I was thinking of going hiking in the nearby mountains. It's been a while since we had some outdoor fun.\n\nIf you're interested, let me know, and we can plan the details. It'll be a great way to unwind and enjoy nature.\n\nLooking forward to your response!\n\nBest, Bob",
-    date: "2023-04-10T11:45:00",
-    read: true,
-    labels: ["personal"],
-  },
-  {
     id: "61c35085-72d7-42b4-8d62-738f700d4b92",
-    name: "Emily Davis",
-    email: "emilydavis@example.com",
-    subject: "Re: Question about Budget",
-    text: "I have a question about the budget for the upcoming project. It seems like there's a discrepancy in the allocation of resources.\n\nI've reviewed the budget report and identified a few areas where we might be able to optimize our spending without compromising the project's quality.\n\nI've attached a detailed analysis for your reference. Let's discuss this further in our next meeting.\n\nThanks, Emily",
-    date: "2023-03-25T13:15:00",
+    name: "AdsPower",
+    email: "captcha@email.adspower.net",
+    subject: "AdsPower登录验证码",
+    text: "您好：\nAdsPower登录验证码为【926493】，5分钟内有效，请尽快使用。\n请不要将该验证码泄露给他人。\n感谢您的使用！\nAdsPower团队",
+    html: "<p><title>adspower</title>\n</p>\n<table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-collapse: collapse;margin-bottom: 40px;\">\n<tbody>\n<tr>\n\t<td>\n\t\t<table align=\"center\" border=\"0\" cellpadding=\"3\" cellspacing=\"0\" width=\"600\" style=\"border-collapse: collapse;margin-bottom: 20px;\">\n\t\t<tbody>\n\t\t<tr>\n\t\t\t<td width=\"68\">\n\t\t\t\t<img style=\"display:block;\" alt=\"logo\" border=\"0\" height=\"60\" src=\"https://download.adspower.net/email/logo.png\" width=\"60\">\n\t\t\t</td>\n\t\t\t<td style=\"font-size:30.0px;\" align=\"left\">AdsPower\n\t\t\t</td>\n\t\t</tr>\n\t\t</tbody>\n\t\t</table>\n\t</td>\n</tr>\n<tr>\n\t<td>\n\t\t<table align=\"center\" border=\"0\" cellpadding=\"8\" cellspacing=\"0\" width=\"600\" style=\"border-collapse: collapse;padding-bottom:20px\">\n\t\t<tbody>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<p style=\"margin-bottom: 20px;font-weight: 500; \">亲爱的【equal.here374@fakeact.fun】，您好：\n\t\t\t\t</p>\n\t\t\t\t<p style=\" margin-bottom: 20px; padding-left: 10px; \">\n\t\t\t\t\tAdsPower登录验证码为【926493】，5分钟内有效，请尽快使用。\n\t\t\t\t</p>\n\t\t\t\t<p style=\" margin-bottom: 20px; padding-left: 10px; \">\n\t\t\t\t\t请不要将该验证码泄露给他人。\n\t\t\t\t</p>\n\t\t\t\t<p style=\"margin-bottom: 30px; padding-left: 10px; \">\n\t\t\t\t\t感谢您的使用！<br>\n\t\t\t\t\tAdsPower团队\n\t\t\t\t</p>\n\t\t\t</td>\n\t\t</tr>\n\t\t</tbody>\n\t\t</table>\n\t</td>\n</tr>\n<tr>\n\t<td>\n\t\t<table align=\"center\" border=\"0\" cellpadding=\"8\" cellspacing=\"0\" width=\"600\" style=\"border-collapse: collapse;padding-bottom:20px\">\n\t\t<tbody>\n\t\t<tr>\n\t\t\t<td style=\"font-size: 14px;color: #aaa;\">此为系统邮件，请勿回复!\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t</td>\n\t\t</tr>\n\t\t</tbody>\n\t\t</table>\n\t</td>\n</tr>\n<tr>\n\t<td align=\"center\">\n\t\t<table align=\"center\" border=\"0\" cellpadding=\"7\" cellspacing=\"0\" width=\"600\" style=\"border-collapse: collapse;padding-bottom:20px;background-color: #f7f7f7; font-size: 14px;\">\n\t\t<tbody>\n\t\t<tr>\n\t\t\t<td>如需要帮助，请联系我们：\n\t\t\t</td>\n\t\t\t<td width=\"90\" align=\"right\" rowspan=\"3\">\n\t\t\t\t<img border=\"0\" style=\"display:inline-block;\" src=\"https://download.adspower.net/email/qr_code.jpg\" alt=\"qr_code icon\" width=\"80\" height=\"80\">\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td align=\"left\" style=\"line-height: normal;\">\n\t\t\t\t<img border=\"0\" style=\"display:inline-block;\" src=\"https://download.adspower.net/email/email.png\" alt=\"email_icon\" width=\"16\" height=\"16\">\n\t\t\t\t通过发送邮件至 support@adspower.net 联系客户支持\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td align=\"left\" style=\"line-height: normal;\">\n\t\t\t\t<img border=\"0\" style=\"display:inline-block;\" src=\"https://download.adspower.net/email/kefu.png\" alt=\"kefu_icon\" width=\"16\" height=\"16\">\n\t\t\t\t登入网址或APP后通过\n\t\t\t\t<a href=\"https://www.adspower.net/\" target=\"_blank\" style=\"text-decoration: none; color:blue;\">在线咨询</a>\n\t\t\t\t联系我们\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td align=\"left\" style=\"line-height: normal;\" colspan=\"2\">\n\t\t\t\t<img border=\"0\" style=\"display:inline-block;\" src=\"https://download.adspower.net/email/wechat.png\" alt=\"wechat_icon\" width=\"16\" height=\"16\">\n\t\t\t\t用微信扫描右方二维码，关注AdsPower官方公众号，然后发消息给我们\n\t\t\t</td>\n\t\t</tr>\n\t\t</tbody>\n\t\t</table>\n\t</td>\n</tr>\n</tbody>\n</table>\n",
+    date: "2025-01-10T13:15:00",
     read: false,
     labels: ["work", "budget"],
   },
@@ -175,40 +146,16 @@ export type Mail = (typeof mails)[number]
 
 export const accounts = [
   {
-    label: "Alicia Koch",
-    email: "alicia@example.com",
-    icon: (
-      <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <title>Vercel</title>
-        <path d="M24 22.525H0l12-21.05 12 21.05z" fill="currentColor" />
-      </svg>
-    ),
+    label: "Equal Here",
+    email: "equal.here374@fakeact.fun"
   },
   {
     label: "Alicia Koch",
-    email: "alicia@gmail.com",
-    icon: (
-      <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <title>Gmail</title>
-        <path
-          d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"
-          fill="currentColor"
-        />
-      </svg>
-    ),
+    email: "blicia@fakemail.fun",
   },
   {
     label: "Alicia Koch",
-    email: "alicia@me.com",
-    icon: (
-      <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <title>iCloud</title>
-        <path
-          d="M13.762 4.29a6.51 6.51 0 0 0-5.669 3.332 3.571 3.571 0 0 0-1.558-.36 3.571 3.571 0 0 0-3.516 3A4.918 4.918 0 0 0 0 14.796a4.918 4.918 0 0 0 4.92 4.914 4.93 4.93 0 0 0 .617-.045h14.42c2.305-.272 4.041-2.258 4.043-4.589v-.009a4.594 4.594 0 0 0-3.727-4.508 6.51 6.51 0 0 0-6.511-6.27z"
-          fill="currentColor"
-        />
-      </svg>
-    ),
+    email: "clicia@fakemail.fun",
   },
 ]
 

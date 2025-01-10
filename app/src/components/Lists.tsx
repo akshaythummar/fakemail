@@ -37,7 +37,7 @@ export default () => {
             if (data.mails && data.mails.length) {
                 const arr = data.mails.filter((e: any) => e);
                 arr.sort((a: any, b: any) => dayjs(b.date).unix() - dayjs(a.date).unix());
-                setMails(arr);
+                if(JSON.stringify(arr) !== JSON.stringify(mails)) setMails(arr);
             } else {
                 setMails([]);
             }

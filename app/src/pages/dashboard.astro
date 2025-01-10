@@ -2,6 +2,7 @@
 import Layout from '@/layouts/Layout.astro';
 import { SignedIn, UserButton } from '@clerk/astro/components';
 import Mail from '@/components/mail/Mail';
+import { ModeToggle } from '@/components/ModeToggle';
 import { accounts, mails } from "@/components/mail/data"
 const layout = Astro.cookies.get("react-resizable-panels:layout:mail");
 const collapsed = Astro.cookies.get("react-resizable-panels:collapsed");
@@ -12,13 +13,14 @@ const defaultCollapsed = collapsed ? JSON.parse(collapsed.value) : undefined;
 
 <Layout>
     <div class="flex flex-col h-screen">
-        <div class="py-2 px-4 shrink-0 bg-gray-700 flex gap-2 items-center" style=`background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(148 163 184 / 0.05)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e")`>
-            <img class='h-7' src='/favicon.svg' alt='Fakeact' title="Fakeact" />
+        <div class="py-2 px-4 shrink-0 bg-gray-700 dark:bg-gray-800 flex gap-2 items-center" style=`background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(148 163 184 / 0.05)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e")`>
+            <a href="/" title="FakeMail"><img class='h-7' src='/favicon.svg' alt='FakeMail' title="FakeMail" /></a>
             <h1 class='font-extrabold text-center text-md text-green-500'>
                 FakeMail
             </h1>
             <p class="text-xs text-gray-400">- Data is stored encrypted on cloudflare D1</p>
             <div class="flex-1"></div>
+            <ModeToggle client:load />
             <SignedIn>
                 <UserButton />
             </SignedIn>
