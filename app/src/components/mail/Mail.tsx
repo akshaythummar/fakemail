@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
     Archive,
-    ArchiveX,
     File,
     Inbox,
     Search,
@@ -23,21 +22,23 @@ import {
 } from "@/components/ui/resizable";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
+import { Toaster } from "@/components/ui/sonner";
 import { cn } from '@/lib/utils';
 import { AccountSwitcher } from './AccountSwitcher';
 import { Nav } from './Nav';
 import { MailList } from './MailList';
 import { MailDisplay } from './MailDisplay';
 import { useMail } from './useMail';
-import { Button } from '../ui/button';
+import { Button, buttonVariants } from '../ui/button';
+import type { MailsList } from './data';
 
 
 interface MailProps {
     accounts: {
-        label: string
-        email: string
+        id: number
+        email_address: string
     }[]
-    mails: any[]
+    mails: MailsList[]
     defaultLayout: number[] | undefined
     defaultCollapsed?: boolean
     navCollapsedSize: number
@@ -96,7 +97,7 @@ export default ({
                             },
                             {
                                 title: "Drafts",
-                                label: "9",
+                                label: "",
                                 icon: File,
                                 variant: "ghost",
                             },
@@ -123,10 +124,10 @@ export default ({
                     <Separator />
                     <div className='flex-1'></div>
                     <div className='py-4 px-2'>
-                        <Button variant="outline" className='w-full'>
+                        <a href='./settings' className={cn('w-full', buttonVariants({ variant: 'outline'}))}>
                             <Settings />
-                            {isCollapsed ? '' : 'My Email Address'}
-                        </Button>
+                            {isCollapsed ? '' : `My Email Address(${accounts.length})`}
+                        </a>
                     </div>
                 </ResizablePanel>
                 <ResizableHandle withHandle />
@@ -161,10 +162,12 @@ export default ({
                 <ResizableHandle withHandle />
                 <ResizablePanel defaultSize={defaultLayout[2]} minSize={30}>
                     <MailDisplay
-                        mail={mails.find((item) => item.id === mail.selected) || null}
+                        mail={mails.find((item) => item.message_id === mail.selected) || null}
+                        currentAccount={accounts[0].email_address}
                     />
                 </ResizablePanel>
             </ResizablePanelGroup>
+            <Toaster />
         </TooltipProvider>
     );
 };

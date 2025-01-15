@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import type { LucideIcon } from 'lucide-react';
 import {
@@ -7,6 +6,7 @@ import {
     TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { buttonVariants } from "@/components/ui/button"
+import { toast } from "sonner";
 
 interface NavProps {
     isCollapsed: boolean;
@@ -29,23 +29,25 @@ export function Nav({ links, isCollapsed }: NavProps) {
                     isCollapsed ? (
                         <Tooltip key={index} delayDuration={0}>
                             <TooltipTrigger asChild>
-                                <a
-                                    href='#'
+                                <div
                                     className={cn(
                                         buttonVariants({
                                             variant: link.variant,
                                             size: 'icon',
                                         }),
-                                        'h-9 w-9',
+                                        'h-9 w-9 cursor-pointer',
                                         link.variant === 'default' &&
                                             'dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white'
                                     )}
+                                    onClick={() => {
+                                        if (link.variant !== 'default') toast(`${link.title} is developing~`);
+                                    }}
                                 >
                                     <link.icon className='h-4 w-4' />
                                     <span className='sr-only'>
                                         {link.title}
                                     </span>
-                                </a>
+                                </div>
                             </TooltipTrigger>
                             <TooltipContent
                                 side='right'
@@ -60,9 +62,8 @@ export function Nav({ links, isCollapsed }: NavProps) {
                             </TooltipContent>
                         </Tooltip>
                     ) : (
-                        <a
+                        <div
                             key={index}
-                            href='#'
                             className={cn(
                                 buttonVariants({
                                     variant: link.variant,
@@ -70,8 +71,11 @@ export function Nav({ links, isCollapsed }: NavProps) {
                                 }),
                                 link.variant === 'default' &&
                                     'dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white',
-                                'justify-start'
+                                'justify-start cursor-pointer'
                             )}
+                            onClick={() => {
+                                if (link.variant !== 'default') toast(`${link.title} is developing~`);
+                            }}
                         >
                             <link.icon className='mr-2 h-4 w-4' />
                             {link.title}
@@ -86,7 +90,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
                                     {link.label}
                                 </span>
                             )}
-                        </a>
+                        </div>
                     )
                 )}
             </nav>

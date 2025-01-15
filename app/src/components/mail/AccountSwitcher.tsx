@@ -11,8 +11,8 @@ import {
 interface AccountSwitcherProps {
     isCollapsed: boolean;
     accounts: {
-        label: string;
-        email: string;
+        id: number;
+        email_address: string;
     }[];
 }
 
@@ -21,7 +21,7 @@ export function AccountSwitcher({
     accounts,
 }: AccountSwitcherProps) {
     const [selectedAccount, setSelectedAccount] = useState<string>(
-        accounts[0].email
+        accounts[0].email_address
     );
 
     return (
@@ -46,10 +46,10 @@ export function AccountSwitcher({
             </SelectTrigger>
             <SelectContent>
                 {accounts.map((account) => (
-                    <SelectItem key={account.email} value={account.email}>
+                    <SelectItem key={account.email_address} value={account.email_address}>
                         <div className='flex items-center gap-1.5 [&_svg]:h-4 [&_svg]:w-4 [&_svg]:shrink-0 [&_svg]:text-foreground'>
-                        <div className='w-5 h-5 rounded-full shrink-0 overflow-hidden text-center leading-5 bg-slate-700 text-white text-xs uppercase'>{account.email.substring(0, 1)}</div>
-                            {account.email}
+                        <div className='w-5 h-5 rounded-full shrink-0 overflow-hidden text-center leading-5 bg-slate-700 text-white text-xs uppercase'>{account.email_address.substring(0, 1)}</div>
+                            {account.email_address}
                         </div>
                     </SelectItem>
                 ))}

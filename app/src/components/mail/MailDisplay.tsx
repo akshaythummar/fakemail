@@ -27,15 +27,16 @@ import { Separator } from '@/components/ui/separator';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 
-import type { Mail } from "./data";
+import type { MailsList } from "./data";
 
 dayjs.extend(utc);
 
 interface MailDisplayProps {
-    mail: Mail | null
+    mail: MailsList | null
+    currentAccount: string
 }
 
-export function MailDisplay({ mail }: MailDisplayProps) {
+export function MailDisplay({ mail, currentAccount }: MailDisplayProps) {
     const today = new Date();
     return (
         <div className='flex h-full flex-col'>
@@ -130,16 +131,16 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                     <div className='flex items-start p-4'>
                         <div className='flex items-start gap-4 text-sm'>
                             <Avatar>
-                                <AvatarImage alt={mail.name} />
+                                <AvatarImage alt={mail.sender} />
                                 <AvatarFallback>
-                                    {mail.name
+                                    {mail.sender
                                         .split(' ')
                                         .map((chunk) => chunk[0])
                                         .join('')}
                                 </AvatarFallback>
                             </Avatar>
                             <div className='grid gap-1'>
-                                <div className='font-semibold'>{mail.name}</div>
+                                <div className='font-semibold'>{mail.sender}</div>
                                 <div className='line-clamp-1 text-xs'>
                                     {mail.subject}
                                 </div>
@@ -147,21 +148,21 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                                     <span className='font-medium'>
                                         Reply-To:
                                     </span>{' '}
-                                    {mail.email}
+                                    {currentAccount}
                                 </div>
                             </div>
                         </div>
-                        {mail.date && (
+                        {mail.received_at && (
                             <div className='ml-auto text-xs text-muted-foreground'>
                                 {dayjs
-                                    .utc(mail.date)
+                                    .utc(mail.received_at)
                                     .local()
                                     .format('YYYY-MM-DD HH:mm:ss')}
                             </div>
                         )}
                     </div>
                     <Separator />
-                    <div className='flex-1 p-4 text-sm' dangerouslySetInnerHTML={{ __html: mail.html || mail.text }}></div>
+                    <div className='flex-1 p-4 text-sm' dangerouslySetInnerHTML={{ __html: mail.content }}></div>
                 </div>
             ) : (
                 <div className='p-8 text-center text-muted-foreground'>

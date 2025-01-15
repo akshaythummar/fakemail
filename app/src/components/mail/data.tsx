@@ -245,3 +245,15 @@ export const contacts = [
 ]
 
 export type Contact = (typeof contacts)[number]
+
+export type MailsList = {
+  message_id: string
+  subject: string
+  sender: string
+  content: string
+  received_at: string
+  is_read:number
+}
+
+export type AccountsList = { id: number; email_address: string; alias: string; created_at: string; };
+  
