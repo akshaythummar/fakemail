@@ -20,6 +20,7 @@ import {
     ResizablePanel,
     ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Toaster } from "@/components/ui/sonner";
@@ -51,8 +52,31 @@ export default ({
     defaultCollapsed = false,
     navCollapsedSize,
 }: MailProps) => {
+    const abortController = new AbortController();
     const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [mailsList, setMailsList] = useState<MailsList[]>(mails);
     const [mail] = useMail();
+    const fetchData = async (id?: number) => {
+        if (!id) return;
+        try {
+            setLoading(true);
+            // if (abortController.abort) abortController.abort();
+            const response = await fetch(`/api/getMails?id=${id}`, { signal: abortController.signal });
+            if (!response.ok) {
+                throw new Error('Network response was not ok.');
+            }
+            const data = await response.json();
+            setMailsList(data?.mails || []);
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+        }
+    }
+    const handleAccountChange = (email: string) => {
+        const currentAccount = accounts.find((account) => account.email_address === email);
+        fetchData(currentAccount?.id);
+    }
     return (
         <TooltipProvider delayDuration={0}>
             <ResizablePanelGroup
@@ -83,7 +107,7 @@ export default ({
                     className={cn("flex flex-col", isCollapsed && "min-w-[50px] transition-all duration-300 ease-in-out")}
                 >
                     <div className={cn("flex h-[52px] items-center justify-center", isCollapsed ? "h-[52px]" : "px-2")}>
-                        <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} />
+                        <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} onAccountChange={handleAccountChange} />
                     </div>
                     <Separator />
                     <Nav
@@ -157,12 +181,18 @@ export default ({
                             </div>
                         </form>
                     </div>
-                    <MailList items={mails} />
+                    {loading ? <div className='px-4'>
+                        <div className='flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all'>
+                            <Skeleton className='w-3/4 h-3' />
+                            <Skeleton className='w-1/4 h-3' />
+                            <Skeleton className='w-3/4 h-2' />
+                        </div>
+                    </div> : <MailList items={mailsList} />}
                 </ResizablePanel>
                 <ResizableHandle withHandle />
                 <ResizablePanel defaultSize={defaultLayout[2]} minSize={30}>
                     <MailDisplay
-                        mail={mails.find((item) => item.message_id === mail.selected) || null}
+                        mail={mailsList.find((item) => item.message_id === mail.selected) || null}
                         currentAccount={accounts[0].email_address}
                     />
                 </ResizablePanel>

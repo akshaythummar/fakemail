@@ -14,20 +14,25 @@ interface AccountSwitcherProps {
         id: number;
         email_address: string;
     }[];
+    onAccountChange: (email: string) => void;
 }
 
 export function AccountSwitcher({
     isCollapsed,
     accounts,
+    onAccountChange
 }: AccountSwitcherProps) {
     const [selectedAccount, setSelectedAccount] = useState<string>(
         accounts[0].email_address
     );
-
+    const handleChanged = (email: string) => {
+        setSelectedAccount(email);
+        onAccountChange(email);
+    }
     return (
         <Select
             defaultValue={selectedAccount}
-            onValueChange={setSelectedAccount}
+            onValueChange={handleChanged}
         >
             <SelectTrigger
                 className={cn(

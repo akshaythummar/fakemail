@@ -60,7 +60,7 @@ export function MailList({ items }: MailListProps) {
                             </div>
                         </div>
                         <div className='line-clamp-2 text-xs text-muted-foreground'>
-                            {item.content.substring(0, 300)}
+                            {item.content && item.content.substring(0, 300)}
                         </div>
                     </button>
                 ))}
