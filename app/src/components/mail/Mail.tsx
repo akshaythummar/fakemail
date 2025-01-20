@@ -1,11 +1,10 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
     Archive,
     File,
     Inbox,
     Search,
     Send,
-    Trash2,
     Copy,
     Settings
 } from "lucide-react";
@@ -24,7 +23,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
 import { cn } from '@/lib/utils';
+import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
 import { AccountSwitcher } from './AccountSwitcher';
 import { Nav } from './Nav';
 import { MailList } from './MailList';
@@ -52,17 +53,20 @@ export default ({
     defaultCollapsed = false,
     navCollapsedSize,
 }: MailProps) => {
-    const abortController = new AbortController();
+    const abortController = useRef<AbortController | null>(null);
     const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
     const [loading, setLoading] = useState<boolean>(false);
     const [mailsList, setMailsList] = useState<MailsList[]>(mails);
+    const [isCopy, setIsCopy] = useState<boolean>(false);
+    const [copiedText, copy] = useCopyToClipboard();
     const [mail] = useMail();
     const fetchData = async (id?: number) => {
         if (!id) return;
         try {
             setLoading(true);
-            // if (abortController.abort) abortController.abort();
-            const response = await fetch(`/api/getMails?id=${id}`, { signal: abortController.signal });
+            abortController.current?.abort();
+            abortController.current = new AbortController();
+            const response = await fetch(`/api/getMails?id=${id}`, { signal: abortController.current.signal });
             if (!response.ok) {
                 throw new Error('Network response was not ok.');
             }
@@ -72,10 +76,69 @@ export default ({
         } catch (error) {
             setLoading(false);
         }
+        abortController.current = null;
     }
     const handleAccountChange = (email: string) => {
         const currentAccount = accounts.find((account) => account.email_address === email);
         fetchData(currentAccount?.id);
+    }
+    const updateStatus = (messageId: string, status: number = 0) => {
+        setMailsList(mailsList.map(item => {
+            if (item.message_id === messageId) item.is_read = status;
+            return item;
+        }));
+    }
+    const handleUnread = async (messageId?: string) => {
+        if (!messageId) return true;
+        const response = await fetch('/api/updateStatus', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ message_id: messageId, is_read: 0 }),
+        })
+        if (response.ok) {
+            const data = await response.json();
+            if (data.code === 200) {
+                updateStatus(messageId);
+                return true;
+            }
+        }
+        return false;
+    }
+    const toDelete = async (messageId?: string) => {
+        if (!messageId) return true;
+        const response = await fetch('/api/deleteMails', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ message_id: messageId }),
+        });
+        if (response.ok) {
+            const data = await response.json();
+            if (data.code === 200) {
+                setMailsList(mailsList.filter(e => e.message_id !== messageId));
+                toast.success('Delete Success!');
+                return true;
+            }
+            toast.error(data.message);
+        }
+        return false;
+    }
+    const toCopy = () => {
+        if (isCopy) return;
+        const currentMail = mailsList.find((item) => item.message_id === mail.selected);
+        copy(accounts[0].email_address)
+            .then(() => {
+                setIsCopy(true);
+                setTimeout(() => {
+                    setIsCopy(false);
+                }, 1500);
+            })
+            .catch((error) => {
+                console.error('Failed to copy!', error);
+            });
     }
     return (
         <TooltipProvider delayDuration={0}>
@@ -132,12 +195,6 @@ export default ({
                                 variant: "ghost",
                             },
                             {
-                                title: "Trash",
-                                label: "",
-                                icon: Trash2,
-                                variant: "ghost",
-                            },
-                            {
                                 title: "Archive",
                                 label: "",
                                 icon: Archive,
@@ -187,13 +244,15 @@ export default ({
                             <Skeleton className='w-1/4 h-3' />
                             <Skeleton className='w-3/4 h-2' />
                         </div>
-                    </div> : <MailList items={mailsList} />}
+                    </div> : <MailList items={mailsList} updateStatus={(messageId) => updateStatus(messageId, 1)} />}
                 </ResizablePanel>
                 <ResizableHandle withHandle />
                 <ResizablePanel defaultSize={defaultLayout[2]} minSize={30}>
                     <MailDisplay
                         mail={mailsList.find((item) => item.message_id === mail.selected) || null}
                         currentAccount={accounts[0].email_address}
+                        toDelete={toDelete}
+                        handleUnread={handleUnread}
                     />
                 </ResizablePanel>
             </ResizablePanelGroup>

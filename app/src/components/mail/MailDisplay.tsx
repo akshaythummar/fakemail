@@ -5,6 +5,7 @@ import {
     Reply,
     ReplyAll,
     Trash2,
+    Loader2
 } from "lucide-react";
 import {
     DropdownMenuContent,
@@ -12,6 +13,17 @@ import {
     DropdownMenu,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { toast } from "sonner";
 import {
     Avatar,
     AvatarFallback,
@@ -28,16 +40,28 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 
 import type { MailsList } from "./data";
+import { useState } from 'react';
 
 dayjs.extend(utc);
 
 interface MailDisplayProps {
     mail: MailsList | null
     currentAccount: string
+    toDelete: (messageId?: string) => Promise<boolean>;
+    handleUnread: (messageId?: string) => Promise<boolean>;
 }
 
-export function MailDisplay({ mail, currentAccount }: MailDisplayProps) {
-    const today = new Date();
+export function MailDisplay({ mail, currentAccount, toDelete, handleUnread }: MailDisplayProps) {
+    const [openStatus, setOpenStatus] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const handleDelete = async () => {
+        setLoading(true);
+        const isOk = await toDelete(mail?.message_id);
+        setLoading(false);
+        if (isOk) {
+            setOpenStatus(false);
+        }
+    }
     return (
         <div className='flex h-full flex-col'>
             <div className='flex items-center p-2'>
@@ -48,6 +72,7 @@ export function MailDisplay({ mail, currentAccount }: MailDisplayProps) {
                                 variant='ghost'
                                 size='icon'
                                 disabled={!mail}
+                                onClick={() => toast('Archive is developing~')}
                             >
                                 <Archive className='h-4 w-4' />
                                 <span className='sr-only'>Archive</span>
@@ -61,13 +86,35 @@ export function MailDisplay({ mail, currentAccount }: MailDisplayProps) {
                                 variant='ghost'
                                 size='icon'
                                 disabled={!mail}
+                                onClick={() => setOpenStatus(true)}
                             >
                                 <Trash2 className='h-4 w-4' />
-                                <span className='sr-only'>Move to trash</span>
+                                <span className='sr-only'>Delete mail</span>
                             </Button>
                         </TooltipTrigger>
-                        <TooltipContent>Move to trash</TooltipContent>
+                        <TooltipContent>Delete mail</TooltipContent>
                     </Tooltip>
+                    <AlertDialog open={openStatus}>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                    Are you absolutely sure?
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    Delete this mail cannot be undone. This will
+                                    permanently remove your data from our servers.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel onClick={() => setOpenStatus(false)}>
+                                    Cancel
+                                </AlertDialogCancel>
+                                <AlertDialogAction asChild>
+                                    <Button variant="destructive" disabled={loading} onClick={handleDelete}>{loading ? <Loader2 className="animate-spin" /> : 'Delete'}</Button>
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
                     <Separator orientation='vertical' className='mx-1 h-6' />
                 </div>
                 <div className='ml-auto flex items-center gap-2'>
@@ -120,7 +167,7 @@ export function MailDisplay({ mail, currentAccount }: MailDisplayProps) {
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align='end'>
-                        <DropdownMenuItem>Mark as unread</DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => handleUnread(mail?.message_id)}>Mark as unread</DropdownMenuItem>
                         {/* <DropdownMenuItem>Add label</DropdownMenuItem> */}
                     </DropdownMenuContent>
                 </DropdownMenu>

@@ -12,10 +12,32 @@ dayjs.extend(relativeTime);
 
 interface MailListProps {
     items: MailsList[];
+    updateStatus?: (messageId: string) => void;
 }
 
-export function MailList({ items }: MailListProps) {
+export function MailList({ items, updateStatus = () => {} }: MailListProps) {
     const [mail, setMail] = useMail();
+    const handleSelect = (messageId: string) => {
+        setMail({
+            ...mail,
+            selected: messageId,
+        });
+
+        fetch('/api/updateStatus', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ message_id: messageId, is_read: 1 }),
+        }).then(async (response) => {
+            if (response.ok) {
+                const data = await response.json();
+                if (data.code === 200) {
+                    updateStatus(messageId);
+                }
+            }
+        })
+    }
     if (items.length === 0) return <div className='p-4 text-center text-xs text-gray-500 [&_p]:mt-2'><Inbox className='mx-auto' /><p>No email received yet</p></div>
     return (
         <ScrollArea className='h-screen'>
@@ -27,12 +49,7 @@ export function MailList({ items }: MailListProps) {
                             'flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent',
                             mail.selected === item.message_id && 'bg-muted'
                         )}
-                        onClick={() =>
-                            setMail({
-                                ...mail,
-                                selected: item.message_id,
-                            })
-                        }
+                        onClick={() => handleSelect(item.message_id)}
                     >
                         <div className='flex w-full flex-col gap-1'>
                             <div className='flex items-center'>
