@@ -10,7 +10,11 @@ This is a temporary email service that uses Cloudflare Workers to create a tempo
 
 ` /mailbox ` - Cloudflare Worker
 
-` /service ` - Hono, Reserved, not used yet
+## Multiple email addresses
+
+use [clerk](https://clerk.com/) to login && reregister
+
+Data is stored encrypted on cloudflare D1
 
 ## License
 
