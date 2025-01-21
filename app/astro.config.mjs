@@ -7,8 +7,6 @@ import tailwind from '@astrojs/tailwind';
 
 import cloudflare from '@astrojs/cloudflare';
 
-import node from '@astrojs/node';
-
 import clerk from '@clerk/astro';
 
 // https://astro.build/config

@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.1.0",
-    "@astrojs/node": "^9.0.0",
     "@astrojs/react": "^4.1.2",
     "@astrojs/tailwind": "^5.1.4",
     "@clerk/astro": "^2.1.4",
@@ -44,7 +43,6 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20241230.0",
-    "wrangler": "^3.101.0"
+    "@cloudflare/workers-types": "^4.20241230.0"
   }
 }
