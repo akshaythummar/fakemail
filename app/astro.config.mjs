@@ -18,12 +18,7 @@ export default defineConfig({
   integrations: [react(), tailwind({
     applyBaseStyles: false,
   }), clerk()],
-  adapter: cloudflare({
-    platformProxy: {
-      enabled: true,
-      configPath: 'wrangler.toml'
-    }
-  }),
+  adapter: cloudflare(),
   vite: {
     resolve: {
       // Use react-dom/server.edge instead of react-dom/server.browser for React 19.
