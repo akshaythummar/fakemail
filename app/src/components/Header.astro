@@ -1,17 +1,25 @@
 ---
+import { LayoutDashboard } from 'lucide-react';
 import Generator from '@/components/Generator';
+import { ModeToggle } from '@/components/ModeToggle';
 ---
 
-<header class="bg-gray-700">
+<header class="bg-gray-700 dark:bg-gray-900">
     <div class="p-4 pt-0" style=`background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(148 163 184 / 0.05)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e")`>
-        <div class=" text-right p-2">
+        <div class="flex justify-end items-center gap-1 pb-2 pt-3">
+            <a
+                href="/dashboard"
+                title="Dashboard"
+                class="text-xs flex gap-1 h-9 items-center text-white bg-gray-900/50 rounded-full px-4 py-1 hover:bg-white/10"
+            ><LayoutDashboard size={16} />Dashboard</a>
+            <ModeToggle client:load />
             <a
                 href='https://github.com/CH563/fakemail'
                 target='_blank'
-                class='inline-block bg-gray-900/50 rounded-full px-2 py-1 hover:bg-white/10'
+                class='inline-flex h-9 w-9 rounded-full items-center justify-center hover:bg-gray-900/40'
             >
                 <span
-                    class='inline-block w-5 h-5 align-middle'
+                    class='block w-5 h-5 align-middle bg-center'
                     style=`background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1naXRodWIiPjxwYXRoIGQ9Ik0xNSAyMnYtNGE0LjggNC44IDAgMCAwLTEtMy41YzMgMCA2LTIgNi01LjUuMDgtMS4yNS0uMjctMi40OC0xLTMuNS4yOC0xLjE1LjI4LTIuMzUgMC0zLjUgMCAwLTEgMC0zIDEuNS0yLjY0LS41LTUuMzYtLjUtOCAwQzYgMiA1IDIgNSAyYy0uMyAxLjE1LS4zIDIuMzUgMCAzLjVBNS40MDMgNS40MDMgMCAwIDAgNCA5YzAgMy41IDMgNS41IDYgNS41LS4zOS40OS0uNjggMS4wNS0uODUgMS42NS0uMTcuNi0uMjIgMS4yMy0uMTUgMS44NXY0Ii8+PHBhdGggZD0iTTkgMThjLTQuNTEgMi01LTItNy0yIi8+PC9zdmc+");background-size:100%`
                 ></span>
             </a>

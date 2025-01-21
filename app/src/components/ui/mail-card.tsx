@@ -46,7 +46,7 @@ export const MailCard = ({
                 <div className='flex-1 grid gap-1'>
                     <div
                         className={cn(
-                            'flex gap-1 items-center text-xs text-gray-500 flex-1 pr-4',
+                            'flex gap-1 items-center text-xs text-gray-500 dark:text-gray-400 flex-1 pr-4',
                             show && 'text-gray-700'
                         )}
                     >

@@ -41,12 +41,12 @@ export default () => {
             });
     };
     return (
-        <div className='flex flex-col items-center gap-3 sm:flex-row'>
-            <TooltipProvider>
+        <TooltipProvider delayDuration={0}>
+            <div className='flex flex-col items-center gap-3 sm:flex-row'>
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <Input
-                            className='sm:flex-1 rounded-full border-none text-center sm:text-left bg-slate-800/40 px-8 py-6 text-sm md:text-xl text-white'
+                            className='sm:flex-1 rounded-full border-none text-center sm:text-left bg-slate-800/40 dark:bg-slate-600/40 px-8 py-6 text-sm md:text-xl text-white'
                             readOnly
                             onFocus={handleFocus}
                             value={address}
@@ -56,9 +56,7 @@ export default () => {
                         <p>Your fake email address</p>
                     </TooltipContent>
                 </Tooltip>
-            </TooltipProvider>
             <div className='flex gap-3 items-center'>
-                <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger asChild>
                             <Button
@@ -73,8 +71,6 @@ export default () => {
                             <p>Copy to clipboard</p>
                         </TooltipContent>
                     </Tooltip>
-                </TooltipProvider>
-                <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger asChild>
                             <Button
@@ -89,26 +85,26 @@ export default () => {
                             <p>Generator a new email address</p>
                         </TooltipContent>
                     </Tooltip>
-                </TooltipProvider>
-                <AlertDialog open={open} onOpenChange={setOpen}>
-                    <AlertDialogContent>
-                        <AlertDialogHeader>
-                            <AlertDialogTitle>
-                                Are you absolutely sure?
-                            </AlertDialogTitle>
-                            <AlertDialogDescription>
-                                This action cannot be undone. This will permanently delete your account and generate a new email address.
-                            </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction asChild>
-                                <Button onClick={generatorNewMail}>Yes, Generator a new email address</Button>
-                            </AlertDialogAction>
-                        </AlertDialogFooter>
-                    </AlertDialogContent>
-                </AlertDialog>
+                    <AlertDialog open={open} onOpenChange={setOpen}>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                    Are you absolutely sure?
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This action cannot be undone. This will permanently delete your account and generate a new email address.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction asChild>
+                                    <Button onClick={generatorNewMail}>Yes, Generator a new email address</Button>
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+                </div>
             </div>
-        </div>
+        </TooltipProvider>
     );
 };
