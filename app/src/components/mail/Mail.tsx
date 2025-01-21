@@ -6,7 +6,9 @@ import {
     Search,
     Send,
     Copy,
-    Settings
+    Check,
+    Settings,
+    RefreshCw
 } from "lucide-react";
 import {
     TooltipProvider,
@@ -34,12 +36,14 @@ import { useMail } from './useMail';
 import { Button, buttonVariants } from '../ui/button';
 import type { MailsList } from './data';
 
+interface Account {
+    id: number
+    email_address: string
+}
+
 
 interface MailProps {
-    accounts: {
-        id: number
-        email_address: string
-    }[]
+    accounts: Account[]
     mails: MailsList[]
     defaultLayout: number[] | undefined
     defaultCollapsed?: boolean
@@ -58,6 +62,7 @@ export default ({
     const [loading, setLoading] = useState<boolean>(false);
     const [mailsList, setMailsList] = useState<MailsList[]>(mails);
     const [isCopy, setIsCopy] = useState<boolean>(false);
+    const [currentAccount, setCurrentAccount] = useState<Account>(accounts[0]);
     const [copiedText, copy] = useCopyToClipboard();
     const [mail] = useMail();
     const fetchData = async (id?: number) => {
@@ -79,7 +84,8 @@ export default ({
         abortController.current = null;
     }
     const handleAccountChange = (email: string) => {
-        const currentAccount = accounts.find((account) => account.email_address === email);
+        const currentAccount = accounts.find((account) => account.email_address === email) || accounts[0];
+        setCurrentAccount(currentAccount);
         fetchData(currentAccount?.id);
     }
     const updateStatus = (messageId: string, status: number = 0) => {
@@ -128,10 +134,10 @@ export default ({
     }
     const toCopy = () => {
         if (isCopy) return;
-        const currentMail = mailsList.find((item) => item.message_id === mail.selected);
-        copy(accounts[0].email_address)
+        copy(currentAccount.email_address)
             .then(() => {
                 setIsCopy(true);
+                toast.success('Copied!');
                 setTimeout(() => {
                     setIsCopy(false);
                 }, 1500);
@@ -178,7 +184,7 @@ export default ({
                         links={[
                             {
                                 title: "Inbox",
-                                label: "128",
+                                label: mailsList.length ? `${mailsList.length}` : "",
                                 icon: Inbox,
                                 variant: "default",
                             },
@@ -221,9 +227,30 @@ export default ({
                                     variant='ghost'
                                     size='icon'
                                     className='ml-auto'
+                                    disabled={loading}
+                                    onClick={() => fetchData(currentAccount.id)}
                                 >
-                                    <Copy className='h-4 w-4' />
-                                    <span className='sr-only'>Copy</span>
+                                    <RefreshCw className={cn('h-4 w-4', loading && 'animate-spin')} />
+                                    <span className='sr-only'>Refresh</span>
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>Get the new mails</TooltipContent>
+                        </Tooltip>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                    variant='ghost'
+                                    size='icon'
+                                    className=''
+                                    disabled={isCopy}
+                                    onClick={toCopy}
+                                >
+                                    {isCopy ? <Check size={16} color='green' /> :
+                                        <>
+                                            <Copy className='h-4 w-4' />
+                                            <span className='sr-only'>Copy</span>
+                                        </>
+                                    }
                                 </Button>
                             </TooltipTrigger>
                             <TooltipContent>Copy current mail address</TooltipContent>
@@ -250,7 +277,7 @@ export default ({
                 <ResizablePanel defaultSize={defaultLayout[2]} minSize={30}>
                     <MailDisplay
                         mail={mailsList.find((item) => item.message_id === mail.selected) || null}
-                        currentAccount={accounts[0].email_address}
+                        currentAccount={currentAccount.email_address}
                         toDelete={toDelete}
                         handleUnread={handleUnread}
                     />
