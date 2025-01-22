@@ -19,7 +19,7 @@ const insertMails = async (emailData: EmailData, env: Env) => {
     try {
         // 1. insert emails table
         const emailResult = await env.MAIL_DB.prepare(`
-            INSERT INTO emails (message_id, user_email_id, subject, sender, recipient, content_type, body_text, body_html, received_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO emails (message_id, user_email_id, subject, sender, recipient, content_type, body_text, body_html, received_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         `).bind(
             emailData.message_id,
             emailData.mail_id,
