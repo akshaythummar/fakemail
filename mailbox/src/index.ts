@@ -35,7 +35,7 @@ export default {
         const suffix = Math.random().toString(16).slice(2, 10);
 
         // get D1 email address
-        const stmt = env.MAIL_DB.prepare('SELECT id, user_id FROM user_email_addresses WHERE email = ?').bind(recipient);
+        const stmt = env.MAIL_DB.prepare('SELECT id, user_id FROM user_email_addresses WHERE email_address = ?').bind(recipient);
         const returnValue = await stmt.run().catch((e) => {
             console.error(e);
             return { results: [] as AccoutAddress[] };

@@ -15,6 +15,11 @@ import { Trash2, CirclePlus } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import type { AccountsList } from './data';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(utc);
+
 
 type AccountsProps = {
     list: AccountsList[]
@@ -46,7 +51,7 @@ export const Accounts = ({ list = [] }: AccountsProps) => {
                     <div className='w-5 h-5 rounded-full shrink-0 overflow-hidden text-center leading-5 bg-slate-700 text-white text-xs uppercase'>{account.email_address.substring(0, 1)}</div>
                         <div className='flex-1 w-0 truncate'>{account.email_address}</div>
                     </div>
-                    <div className='col-span-2 leading-4 py-2 text-gray-600 dark:text-gray-400 text-xs'>{account.created_at}</div>
+                    <div className='col-span-2 leading-4 py-2 text-gray-600 dark:text-gray-400 text-xs'>{dayjs.utc(account.created_at).local().format('YYYY-MM-DD HH:mm:ss')}</div>
                     <div className='col-span-5 leading-4 py-2'>{account.alias}</div>
                     <div className='col-span-1'>
                         <Button variant='ghost' size='icon' onClick={() => toast('Developing, please wait~')}><Trash2 className='h-4 w-4' color='red' /></Button>
