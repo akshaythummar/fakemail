@@ -14,4 +14,9 @@ export const onRequest = clerkMiddleware((auth, context) => {
             
         });
     }
+}, {
+    publishableKey: import.meta.env.CLERK_PUBLISHABLE_KEY,
+    secretKey: import.meta.env.CLERK_SECRET_KEY,
+    signInUrl: '/sign-in',
+    signUpUrl: '/sign-up',
 });
