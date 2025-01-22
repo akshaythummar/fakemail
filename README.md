@@ -12,7 +12,7 @@ This is a temporary email service that uses Cloudflare Workers to create a tempo
 
 ## Multiple email addresses
 
-use [clerk](https://clerk.com/) to login && reregister
+use [clerk](https://clerk.com/) to login && register
 
 Data is stored encrypted on cloudflare D1
 
