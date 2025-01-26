@@ -1,6 +1,11 @@
 import type { APIRoute, APIContext } from 'astro';
 import demo from '@/lib/demo';
 
+function validateString(str: string): boolean {
+    const regex = /^[a-zA-Z0-9]+\.[a-zA-Z0-9]+\d{3}$/;
+    return regex.test(str);
+}
+
 export const GET: APIRoute = async ({ request, locals }: APIContext) => {
     const address = new URL(request.url).searchParams.get('address');
     if (import.meta.env.DEV) {
@@ -11,6 +16,15 @@ export const GET: APIRoute = async ({ request, locals }: APIContext) => {
             status: 'bad request',
             code: 400,
             msg: "'address' query required!",
+        }));
+    }
+
+    const addresName = (address || '').split('@')[0];
+    if (!validateString(addresName)) {
+        return new Response(JSON.stringify({
+            status: 'bad request',
+            code: 400,
+            msg: "'address' query invalid!",
         }));
     }
 

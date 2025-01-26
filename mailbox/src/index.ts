@@ -26,8 +26,9 @@ export default {
         }
         await env.POST_DB.put('stats-count', String(parseInt(prev_count) + 1));
 
-        let sender = email.from.address;
-        let recipient = email.to?.length ? email.to[0].address : '';
+        const sender = email.from.address;
+        const senderName = email.from.name;
+        const recipient = email.to?.length ? email.to[0].address : '';
 
         if (!recipient) return;
 
@@ -47,14 +48,17 @@ export default {
             await insertMails({
                 mail_id: id,
                 user_id: user_id,
-                message_id: `${recipient}-keys`,
+                message_id: email.messageId || `${recipient}-${suffix}`,
                 subject: email.subject || '',
                 sender: sender || '',
+                senderName: senderName || '',
                 recipient,
                 content_type: 'text/html',
                 body_text: email.text || '',
                 body_html: email.html || '',
                 received_at: email.date || new Date().toISOString(),
+                cc: email.cc?.map((cc) => cc.address).join(',') || '',
+                bcc: email.bcc?.map((bcc) => bcc.address).join(',') || '',
             }, env);
             return;
         }
@@ -81,6 +85,7 @@ export default {
             suffix: suffix,
             recipient: recipient,
             sender: sender,
+            name: senderName,
             subject: email.subject,
             'content-plain': email.text,
             'content-plain-formatted': formatted_content,
