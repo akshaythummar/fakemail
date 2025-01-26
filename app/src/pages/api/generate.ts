@@ -28,14 +28,19 @@ export const POST: APIRoute = async ({ request, locals }: APIContext) => {
     const words = generate({ exactly: 2, maxLength: 5 });
     const alt = words[0] + '.' + words[1] + Math.floor(Math.random() * 1000) + domain;
     const stmt2 = locals.runtime.env.MAIL_DB?.prepare('Insert into user_email_addresses (user_id, email_address, alias) values (?, ?, ?)').bind(userId, alt, remark);
-    await stmt2.run().catch((e) => {
-        console.error(e);
-    });
-    return new Response(
-        JSON.stringify({
+    const msg = await stmt2.run().then(() => {
+        return {
             status: 'ok',
             code: 200,
             msg: 'Success',
-        })
-    );
+        }
+    }).catch((e) => {
+        console.error(e);
+        return {
+            status: 'bad request',
+            code: 400,
+            msg: 'Something wrong or exists, please try again!',
+        }
+    });
+    return new Response(JSON.stringify(msg));
 };
