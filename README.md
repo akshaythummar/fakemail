@@ -1,5 +1,7 @@
 # Fake Mail - The free temporary email service
 
+![](./images/fakemail.png)
+
 📪 Website: [https://mail.fakeact.fun](https://mail.fakeact.fun)
 
 ## Fake email generator, delete emails 2 hours after receiving
