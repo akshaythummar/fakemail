@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, memo } from 'react';
 import { Inbox, Mails, RefreshCw, Loader2 } from 'lucide-react';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
@@ -9,6 +9,40 @@ import { toast } from "sonner"
 
 dayjs.extend(utc);
 
+const countDownTime = 10;
+
+const CountdownNumber = memo(({ value }: { value: number }) => (<span className='text-green-600 mx-1'>{value}</span>));
+const CountDownComp = (({ value }: { value: number }) => {
+    const [countDown, setCountDown] = useState<number>(countDownTime);
+    useEffect(() => {
+        setCountDown(value);
+        const intervalId = setInterval(() => {
+            setCountDown((prevCount) => prevCount - 1);
+        }, 1000);
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, [value]);
+    return (
+        <CountdownNumber value={countDown} />
+    );
+});
+const MailCardComp = memo(({ mails, toDelete }: { mails: any[], toDelete: (mail: any) => void}) => mails.map((mail: any, index: number) => {
+    if (mail) {
+        return (
+            <MailCard
+                key={mail.suffix}
+                sender={mail.sender}
+                subject={mail.subject}
+                date={dayjs.utc(mail.date).local().format('YYYY-MM-DD HH:mm:ss')}
+                content={mail['content-plain-formatted'] || mail['content-plain'] || mail['content-html']}
+                defaultShow={index === 0}
+                toDelete={() => toDelete(mail)}
+            />
+        )
+    }
+}));
+
 export default () => {
     const [mails, setMails] = useState([]);
     const [stats, setStats] = useState<any>({});
@@ -16,7 +50,7 @@ export default () => {
     const intervalId = useRef<any>(null);
     const countDownId = useRef<any>(null);
     const intervalStop = useRef<number>(0);
-    const [countDown, setCountDown] = useState<number>(30);
+    const countDown = useRef<number>(countDownTime);
     const fetchData = async () => {
         clearInterval(countDownId.current);
         if (intervalStop.current > 15) clearInterval(intervalId.current);
@@ -28,16 +62,17 @@ export default () => {
             if (!response.ok) {
                 throw new Error('Network response was not ok.');
             }
-            setCountDown(30);
+            countDown.current = countDownTime;
             countDownId.current = setInterval(() => {
-                setCountDown((prevCount) => prevCount - 1);
+                countDown.current = countDown.current - 1;
             }, 1000);
             intervalStop.current = intervalStop.current++;
             const data = await response.json();
             if (data.mails && data.mails.length) {
                 const arr = data.mails.filter((e: any) => e);
                 arr.sort((a: any, b: any) => dayjs(b.date).unix() - dayjs(a.date).unix());
-                if(JSON.stringify(arr) !== JSON.stringify(mails)) setMails(arr);
+                setMails(arr);
+                if (arr.length) clearInterval(intervalId.current);
             } else {
                 setMails([]);
             }
@@ -51,7 +86,7 @@ export default () => {
         clearInterval(intervalId.current);
         intervalStop.current = 0;
         fetchData();
-        intervalId.current = setInterval(fetchData, 30 * 1000);
+        intervalId.current = setInterval(fetchData, countDownTime * 1000);
     }
     const toDelete = async (mail: any) => {
         const response = await fetch('/api/delete', {
@@ -69,46 +104,29 @@ export default () => {
 
     useEffect(() => {
         fetchData();
-        intervalId.current = setInterval(fetchData, 30 * 1000);
+        intervalId.current = setInterval(fetchData, countDownTime * 1000);
         return () => {
             clearInterval(intervalId.current);
         };
     }, []);
-    let dom: any = (<div className='border border-dashed border-gray-400 rounded-xl p-4'>
+    const emptyDom = (<div className='border border-dashed border-gray-400 rounded-xl p-4'>
         <div className='text-center text-gray-400'>
             <Inbox className='mx-auto' />
             <p>No email received yet</p>
         </div>
     </div>);
-    if (mails.length) {
-        dom = mails.map((mail: any, index: number) => {
-            if (mail) {
-                return (
-                    <MailCard
-                        key={mail.suffix}
-                        sender={mail.sender}
-                        subject={mail.subject}
-                        date={dayjs.utc(mail.date).local().format('YYYY-MM-DD HH:mm:ss')}
-                        content={mail['content-plain-formatted'] || mail['content-plain'] || mail['content-html']}
-                        defaultShow={index === 0}
-                        toDelete={() => toDelete(mail)}
-                    />
-                )
-            }
-        });
-    }
     return (
         <>
             <div className='flex justify-between items-center py-2'>
                 <h2 className="text-center font-semibold flex gap-1 items-center"><Mails size={18} />Mail Inbox{mails.length ? `(${mails.length})` : ''}</h2>
                 <div className='flex gap-2 items-center'>
-                {(intervalStop.current < 15 && !loading) && <div className='flex items-center text-xs text-gray-500'><div className="animate-ping w-1 h-1 rounded-full bg-green-600 mr-2" /> Refresh after <span className='text-green-600 mx-1'>{countDown}</span> s</div>}
+                {(intervalStop.current < 15 && !mails.length && !loading) && <div className='flex items-center text-xs text-gray-500'><div className="animate-ping w-1 h-1 rounded-full bg-green-600 mr-2" /> Refresh after <CountDownComp value={countDown.current} /> s</div>}
                     <Button size='xs' variant='outline' onClick={refresh} disabled={loading}>
                         {loading ? <Loader2 className="animate-spin" /> : <RefreshCw />}
                     </Button>
                 </div>
             </div>
-            {dom}
+            {!mails.length ? emptyDom : <MailCardComp mails={mails} toDelete={toDelete} />}
             <div className='py-4 text-xs text-gray-400'>
                 -- We've received<span className='mx-1 text-green-600'>{stats.count}</span>emails so far.
             </div>
