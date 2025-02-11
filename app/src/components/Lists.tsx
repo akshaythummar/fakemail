@@ -9,7 +9,7 @@ import { toast } from "sonner"
 
 dayjs.extend(utc);
 
-const countDownTime = 10;
+const countDownTime = 30;
 
 const CountdownNumber = memo(({ value }: { value: number }) => (<span className='text-green-600 mx-1'>{value}</span>));
 const CountDownComp = (({ value }: { value: number }) => {
