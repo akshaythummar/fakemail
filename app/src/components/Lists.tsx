@@ -34,6 +34,7 @@ const MailCardComp = memo(({ mails, toDelete }: { mails: any[], toDelete: (mail:
                 key={mail.suffix}
                 sender={mail.sender}
                 subject={mail.subject}
+                name={mail.name}
                 date={dayjs.utc(mail.date).local().format('YYYY-MM-DD HH:mm:ss')}
                 content={mail['content-plain-formatted'] || mail['content-plain'] || mail['content-html']}
                 defaultShow={index === 0}
@@ -45,7 +46,7 @@ const MailCardComp = memo(({ mails, toDelete }: { mails: any[], toDelete: (mail:
 
 export default () => {
     const [mails, setMails] = useState([]);
-    const [stats, setStats] = useState<any>({});
+    const [stats, setStats] = useState<{count: number}>({count: 0});
     const [loading, setLoading] = useState<boolean>(false);
     const intervalId = useRef<any>(null);
     const countDownId = useRef<any>(null);
@@ -76,7 +77,7 @@ export default () => {
             } else {
                 setMails([]);
             }
-            setStats(data.stats);
+            if (Number(data.stats.count)) setStats({count: Number(data.stats.count)});
             setLoading(false);
         } catch (error) {
             setLoading(false);
@@ -128,7 +129,7 @@ export default () => {
             </div>
             {!mails.length ? emptyDom : <MailCardComp mails={mails} toDelete={toDelete} />}
             <div className='py-4 text-xs text-gray-400'>
-                -- We've received<span className='mx-1 text-green-600'>{stats.count}</span>emails so far.
+                -- We've received<span className='mx-1 text-lg text-green-600/70 italic font-semibold'>{stats.count.toLocaleString()}</span>emails so far.
             </div>
             <Toaster />
         </>

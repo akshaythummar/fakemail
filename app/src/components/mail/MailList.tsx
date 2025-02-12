@@ -55,7 +55,7 @@ export function MailList({ items, updateStatus = () => {} }: MailListProps) {
                             <div className='flex items-center'>
                                 <div className='flex items-center gap-2'>
                                     <div className='font-semibold'>
-                                        {item.sender}
+                                        {item.senderName || item.sender}
                                     </div>
                                     {!item.is_read && (
                                         <span className='flex h-2 w-2 rounded-full bg-blue-600' />

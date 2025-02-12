@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
-import { Trash2, CirclePlus } from "lucide-react";
+import { Trash2, CirclePlus, FilePenLine } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import type { AccountsList } from './data';
@@ -54,6 +54,7 @@ export const Accounts = ({ list = [] }: AccountsProps) => {
                     <div className='col-span-2 leading-4 py-2 text-gray-600 dark:text-gray-400 text-xs'>{dayjs.utc(account.created_at).local().format('YYYY-MM-DD HH:mm:ss')}</div>
                     <div className='col-span-5 leading-4 py-2'>{account.alias}</div>
                     <div className='col-span-1'>
+                        <Button variant='ghost' size='icon' onClick={() => toast('Developing, please wait~')}><FilePenLine className='h-4 w-4' /></Button>
                         <Button variant='ghost' size='icon' onClick={() => toast('Developing, please wait~')}><Trash2 className='h-4 w-4' color='red' /></Button>
                     </div>
                 </div>

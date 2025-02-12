@@ -19,6 +19,7 @@ interface MailData {
     sender: string;
     subject: string;
     date: string;
+    name?: string;
     content: string;
     defaultShow: boolean;
     toDelete?: () => void;
@@ -29,6 +30,7 @@ export const MailCard = ({
     sender,
     subject,
     date,
+    name,
     content,
     defaultShow,
     toDelete
@@ -51,11 +53,11 @@ export const MailCard = ({
                         )}
                     >
                         <Mail size={16} />
-                        {sender}
+                        {name ? `${name} <${sender}>` : sender}
                     </div>
                     <div className='text-sm font-semibold'>{subject}</div>
                 </div>
-                <div className='flex gap-1 justify-between border-t pt-1 sm:border-none sm:pt-0 items-center shrink-0'>
+                <div className='flex gap-1.5 justify-between border-t pt-1 sm:border-none sm:pt-0 items-center shrink-0'>
                     <div className='text-xs text-gray-600 whitespace-nowrap'>
                         {date}
                     </div>

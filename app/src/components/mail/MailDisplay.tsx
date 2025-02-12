@@ -178,25 +178,37 @@ export function MailDisplay({ mail, currentAccount, toDelete, handleUnread }: Ma
                     <div className='flex items-start p-4'>
                         <div className='flex items-start gap-4 text-sm'>
                             <Avatar>
-                                <AvatarImage alt={mail.sender} />
+                                <AvatarImage alt={mail.senderName || mail.sender} />
                                 <AvatarFallback>
-                                    {mail.sender
-                                        .split(' ')
-                                        .map((chunk) => chunk[0])
-                                        .join('')}
+                                    {(mail.senderName || mail.sender).split(' ').map((chunk) => chunk[0]).join('')}
                                 </AvatarFallback>
                             </Avatar>
                             <div className='grid gap-1'>
-                                <div className='font-semibold'>{mail.sender}</div>
+                                <div className='flex gap-1 items-center text-xs'>
+                                    <span className='font-semibold'>{mail.senderName || mail.sender}</span>
+                                    {mail.senderName && <span className='text-gray-400'>&lt;{mail.sender}&gt;</span>}
+                                </div>
                                 <div className='line-clamp-1 text-xs'>
                                     {mail.subject}
                                 </div>
-                                <div className='line-clamp-1 text-xs'>
-                                    <span className='font-medium'>
-                                        Reply-To:
+                                <div className='line-clamp-1 text-xs text-gray-400'>
+                                    <span className='font-medium text-gray-600 dark:text-gray-300'>
+                                        Recipient:
                                     </span>{' '}
                                     {currentAccount}
+                                    {mail.cc && (
+                                        <>
+                                            <span className='ml-2 font-medium text-gray-600 dark:text-gray-300'>CC:</span>{' '}
+                                            {mail.cc}
+                                        </>
+                                    )}
                                 </div>
+                                {/* <div className='line-clamp-1 text-xs text-gray-400'>
+                                    <span className='font-medium text-gray-600 dark:text-gray-300'>
+                                        Reply-To:
+                                    </span>{' '}
+                                    {mail.senderName || mail.sender}
+                                </div> */}
                             </div>
                         </div>
                         {mail.received_at && (

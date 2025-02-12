@@ -24,7 +24,7 @@ if(Astro.locals.runtime) {
                 email_address: row.email_address as string
             });
         }
-        const stmt2 = env.MAIL_DB.prepare("SELECT e.message_id, e.subject, e.sender, e.body_text, e.body_html, e.received_at, es.is_read FROM emails e JOIN email_status es ON es.email_id = e.id WHERE user_email_id = ? ORDER BY received_at DESC").bind(accounts[0].id);
+        const stmt2 = env.MAIL_DB.prepare("SELECT e.message_id, e.subject, e.sender, e.sender_name, e.cc, e.body_text, e.body_html, e.received_at, es.is_read FROM emails e JOIN email_status es ON es.email_id = e.id WHERE user_email_id = ? ORDER BY received_at DESC").bind(accounts[0].id);
         const returnMails = await stmt2.run().catch((e) => {
             console.error(e);
             return { results: [] };
@@ -34,6 +34,8 @@ if(Astro.locals.runtime) {
                 message_id: row.message_id as string,
                 subject: row.subject as string,
                 sender: row.sender as string,
+                senderName: row.sender_name as string,
+                cc: row.cc as string,
                 content: (row.body_text || row.body_html) as string,
                 received_at: row.received_at as string,
                 is_read: row.is_read as number

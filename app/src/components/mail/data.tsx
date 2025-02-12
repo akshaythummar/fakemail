@@ -250,6 +250,8 @@ export type MailsList = {
   message_id: string
   subject: string
   sender: string
+  senderName: string
+  cc: string
   content: string
   received_at: string
   is_read:number
