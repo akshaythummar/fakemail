@@ -4,6 +4,11 @@ import type { APIRoute, APIContext } from 'astro';
 export const POST: APIRoute = async ({ request, locals }: APIContext) => {
     const domain = '@fakeact.fun';
     const { remark } = await request.json();
+    if ((remark || '').length > 400) return new Response(JSON.stringify({
+        status: 'bad request',
+        code: 400,
+        msg: "remark is too long!",
+    }));
     const { userId } = locals.auth();
     if (!userId) {
         return new Response(JSON.stringify({
