@@ -76,6 +76,10 @@ export default ({
                 throw new Error('Network response was not ok.');
             }
             const data = await response.json();
+            if (data.code === 502) {
+                // redirect to login page
+                window.location.href = '/sign-in';
+            }
             setMailsList(data?.mails || []);
             setLoading(false);
         } catch (error) {

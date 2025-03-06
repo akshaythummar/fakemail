@@ -11,9 +11,10 @@ export const GET: APIRoute = async ({ request, locals }: APIContext) => {
     }
     const { userId } = locals.auth();
     if (!userId) {
+        // redirect to login page
         return new Response(JSON.stringify({
             status: 'bad request',
-            code: 400,
+            code: 502,
             msg: "please login!",
         }));
     }
