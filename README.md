@@ -1,6 +1,6 @@
 # Fake Mail - The free temporary email service
 
-![](./images/fakemail.png)
+![](./images/tempmail.png)
 
 📪 Website: [https://mail.fakeact.fun](https://mail.fakeact.fun)
 
