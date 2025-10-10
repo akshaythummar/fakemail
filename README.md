@@ -2,7 +2,7 @@
 
 ![](./images/tempmail.png)
 
-📪 Website: [https://mail.fakeact.fun](https://mail.fakeact.fun)
+📪 Website: [https://teraboxplay.info](https://teraboxplay.info)
 
 ## Fake email generator, delete emails 2 hours after receiving
 
@@ -20,7 +20,7 @@ Data is stored encrypted on cloudflare D1
 
 ## License
 
-Fake Mail is licensed under the [MIT License](https://github.com/CH563/fakemail/blob/main/LICENSE).
+Fake Mail is licensed under the [MIT License](https://github.com/akshaythummar/fakemail/blob/main/LICENSE).
 
 build commands :
 build -> cmd /c "d: && cd d:\THUMMAR\fakemail\app && npm run build"
