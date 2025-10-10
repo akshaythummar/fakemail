@@ -73,7 +73,28 @@ export const MailCard = ({
             </div>
             {show && (
                 <div className='pt-4 border-t leading-4 text-sm'>
-                    <div dangerouslySetInnerHTML={{ __html: content }}></div>
+                    <div
+                        className='prose prose-sm max-w-none break-words overflow-wrap-anywhere'
+                        style={{
+                            wordBreak: 'break-word',
+                            wordWrap: 'break-word',
+                            overflowWrap: 'break-word',
+                            hyphens: 'auto'
+                        }}
+                        dangerouslySetInnerHTML={{
+                            __html: content.replace(
+                                /<a([^>]+)>/g,
+                                (match, attrs) => {
+                                    // Check if target="_blank" already exists
+                                    if (attrs.includes('target="_blank"') || attrs.includes("target='_blank'")) {
+                                        return `<a${attrs} class="text-blue-600 hover:text-blue-800 underline break-all cursor-pointer">`;
+                                    }
+                                    // Add target="_blank" and other attributes
+                                    return `<a${attrs} target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline break-all cursor-pointer">`;
+                                }
+                            )
+                        }}
+                    ></div>
                     <div className='border-t pt-2 text-right'>
                         <AlertDialog>
                             <AlertDialogTrigger asChild>
