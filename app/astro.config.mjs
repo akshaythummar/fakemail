@@ -12,7 +12,7 @@ import clerk from '@clerk/astro';
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
-  site: 'https://mail.fakeact.fun',
+  site: 'https://teraboxplay.info',
   integrations: [react(), tailwind({
     applyBaseStyles: false,
   }), clerk()],

@@ -6,7 +6,7 @@ export default {
     mails: [
         {
             suffix: '5cc52bcf',
-            recipient: 'men.strip311@fakeact.fun',
+            recipient: 'men.strip311@teraboxplay.info',
             sender: 'test@gmail.com',
             name: 'Test User',
             subject: 'Your verification code is 662144',
@@ -19,7 +19,7 @@ export default {
         },
         {
             suffix: '34e222s',
-            recipient: 'men.strip311@fakeact.fun',
+            recipient: 'men.strip311@teraboxplay.info',
             sender: 'test@gmail.com',
             subject: 'Your verification code is 33322222',
             'content-plain':

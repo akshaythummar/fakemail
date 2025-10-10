@@ -2,7 +2,7 @@ import { generate } from 'random-words';
 import type { APIRoute, APIContext } from 'astro';
 
 export const POST: APIRoute = async ({ request, locals }: APIContext) => {
-    const domain = '@fakeact.fun';
+    const domain = '@teraboxplay.info';
     const { remark } = await request.json();
     if ((remark || '').length > 400) return new Response(JSON.stringify({
         status: 'bad request',

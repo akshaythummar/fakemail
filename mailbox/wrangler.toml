@@ -2,10 +2,11 @@ name = "temp-mail"
 main = "src/index.ts"
 compatibility_date = "2024-11-11"
 compatibility_flags = [ "nodejs_compat" ]
+
 kv_namespaces = [
-    { binding = "POST_DB", id = "b1002ec7a3d74b9cb64504ea6d6a5586", preview_id = "238c3081e8ae49f091c08df88cf6c079" },
+    { binding = "POST_DB", id = "5a0a7bba33884a0ebbb3561c6bc0f482", preview_id = "5a0a7bba33884a0ebbb3561c6bc0f482" },
 ]
 
 d1_databases = [
-    { binding = "MAIL_DB", database_name = "fake-mail", database_id = "852bdefb-ec72-4589-8de3-f49bb2d01883", preview_database_id = "686ae900-aaea-4c69-8499-b0c8ea8c960d"},
+    { binding = "MAIL_DB", database_name = "fake-mail", database_id = "3526284c-af70-4f55-9774-cc33560216ef", preview_database_id = "3526284c-af70-4f55-9774-cc33560216ef"},
 ]

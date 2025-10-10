@@ -1,7 +1,7 @@
 import { generate } from 'random-words';
 
 export const getRandomMail = (isNew: boolean = false) => {
-    const domain = '@fakeact.fun';
+    const domain = '@teraboxplay.info';
     if (!isNew) {
         const receivingEmail = window?.localStorage.getItem('receivingEmail');
         if (receivingEmail && receivingEmail.includes(domain)) {

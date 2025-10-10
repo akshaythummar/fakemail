@@ -112,7 +112,7 @@ export const Accounts = ({ list = [] }: AccountsProps) => {
                         <DialogHeader>
                         <DialogTitle>Add a email address</DialogTitle>
                         <DialogDescription asChild>
-                            <div className='text-sm'>Generate a random email address <Badge>@fakeact.fun</Badge></div>
+                            <div className='text-sm'>Generate a random email address <Badge>@teraboxplay.info</Badge></div>
                         </DialogDescription>
                         </DialogHeader>
                         <div className="grid gap-4 py-4">

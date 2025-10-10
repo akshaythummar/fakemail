@@ -147,7 +147,7 @@ export type Mail = (typeof mails)[number]
 export const accounts = [
   {
     label: "Equal Here",
-    email: "equal.here374@fakeact.fun"
+    email: "equal.here374@teraboxplay.info"
   },
   {
     label: "Alicia Koch",
