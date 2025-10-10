@@ -39,8 +39,8 @@ export const MailCard = ({
     return (
         <div
             className={cn(
-                'border border-gray-300 rounded-xl p-4 grid gap-1 mb-3 hover:border-green-600 hover:bg-green-50/10',
-                show && 'border-2',
+                'group bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-gray-200 dark:border-slate-700 rounded-2xl p-6 mb-4 card-hover fade-in',
+                show && 'ring-2 ring-green-400/20 border-green-400/30',
                 className
             )}
         >

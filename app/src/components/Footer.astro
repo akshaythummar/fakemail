@@ -1,12 +1,117 @@
 ---
-import shoteasy from '@/assets/shoteasy.svg'
-import fakeact from '@/assets/fakeact.svg'
+import { Github, Twitter, ExternalLink, Heart } from 'lucide-react';
 ---
 
-<footer>
-    <div class="container mx-auto p-4 pt-10">
-        <div class='text-center text-xs text-gray-400 border-t pt-4'>
-            Copyright © 2025 FakeMail
+<footer class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-t border-white/10">
+    <div class="container mx-auto px-4 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <!-- Brand Section -->
+            <div class="md:col-span-2">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
+                        <img class='w-6 h-6' src='/favicon.svg' alt='FakeMail' />
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold text-lg">FakeMail</h3>
+                        <p class="text-white/60 text-sm">Temporary Email Service</p>
+                    </div>
+                </div>
+                <p class="text-white/70 text-sm leading-relaxed mb-4">
+                    The most advanced temporary email service that protects your privacy while keeping you safe from spam and unwanted emails.
+                </p>
+                <div class="flex items-center gap-4">
+                    <a
+                        href="https://github.com/akshaythummar/fakemail"
+                        target="_blank"
+                        class="flex items-center gap-2 text-white/60 hover:text-white transition-colors duration-200"
+                    >
+                        <Github size={18} />
+                        <span class="text-sm">View Source</span>
+                    </a>
+                    <a
+                        href="https://teraboxplay.info"
+                        target="_blank"
+                        class="flex items-center gap-2 text-white/60 hover:text-white transition-colors duration-200"
+                    >
+                        <ExternalLink size={18} />
+                        <span class="text-sm">Website</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+                <ul class="space-y-2">
+                    <li>
+                        <a href="/dashboard" class="text-white/60 hover:text-white transition-colors duration-200 text-sm">
+                            📊 Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#features" class="text-white/60 hover:text-white transition-colors duration-200 text-sm">
+                            ✨ Features
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#privacy" class="text-white/60 hover:text-white transition-colors duration-200 text-sm">
+                            🔒 Privacy Policy
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Support -->
+            <div>
+                <h4 class="text-white font-semibold mb-4">Support</h4>
+                <ul class="space-y-2">
+                    <li>
+                        <span class="text-white/60 text-sm">📧 support@fakemail.com</span>
+                    </li>
+                    <li>
+                        <span class="text-white/60 text-sm">💬 Live Chat Available</span>
+                    </li>
+                    <li>
+                        <span class="text-white/60 text-sm">📚 API Documentation</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 mb-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div>
+                    <div class="text-2xl font-bold text-green-400 mb-1">99.9%</div>
+                    <div class="text-white/60 text-sm">Uptime</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold text-blue-400 mb-1"><100ms</div>
+                    <div class="text-white/60 text-sm">Response Time</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold text-purple-400 mb-1">256-bit</div>
+                    <div class="text-white/60 text-sm">Encryption</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold text-orange-400 mb-1">24/7</div>
+                    <div class="text-white/60 text-sm">Support</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Section -->
+        <div class="border-t border-white/10 pt-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="text-white/60 text-sm">
+                    © 2025 FakeMail. Made with <Heart size={14} className="inline text-red-400" /> by developers for privacy.
+                </div>
+                <div class="flex items-center gap-6 text-sm text-white/60">
+                    <span>🚀 Powered by Cloudflare Workers</span>
+                    <span>🌍 Global Coverage</span>
+                    <span>🔒 Privacy First</span>
+                </div>
+            </div>
         </div>
     </div>
 </footer>

@@ -1,20 +1,141 @@
 ---
 import Container from '@/components/Container';
+import { Mail, Users, Globe, Lock, Clock, CheckCircle } from 'lucide-react';
 const env = import.meta.env.PROD ? Astro.locals.runtime.env : import.meta.env;
 ---
 
-<main>
-    <div class="container mx-auto max-w-3xl px-2 lg:px-0">
-        <Container client:load siteKey={env.PUBLIC_TURNSTILE_SITE_KEY} />
-        <div class="px-2 md:px-0 [&_p]:text-sm [&_p]:text-gray-600 dark:[&_p]:text-gray-300 [&_p]:text-justify [&_p]:break-keep [&_p+p]:mt-3 [&_h2]:p-4 [&_h2]:mt-8 [&_h2]:text-center [&_h2]:font-semibold">
-            <h2>What is the FakeMail?</h2>
-            <p class="text-sm text-gray-600"><strong>FakeMail (Temporary email)</strong> - is a free email service that allows to receive email at a temporary address that self-destructed after a certain time elapses. It is also known by names like : tempmail, 10minutemail, 10minmail, throwaway email, fake-mail , fake email generator, burner mail or trash-mail. Many forums, Wi-Fi owners, websites and blogs ask visitors to register before they can view content, post comments or download something. Temp-Mail - is most advanced throwaway email service that helps you avoid spam and stay safe.</p>
-            <h2>Why would you need a fake email address?</h2>
-            <p>You must have noted services such as Amazon Prime, Hulu and Netflix allow limited-time test runs(trials), however, if still determined to use the services all you need is a disposable email address. Technically, you can extend your trial usage using a different email address linked to your original (genuine) after the trial period expires.</p>
-            <p>An offline or online retailer tend to demand an email address to take advantage of their offers, however, this result in an unwanted deluge of spam promotional emails that you could avoid. Temporary email address makes it easy to cut out those irritating messages you are still receiving.</p>
-            <p>Technically, the idea of a temporary email address conjures up with black hat hackers and underworld internet, but there are convincing reason to us fake email services.</p>
-            <h2>Cloudflare temporary email</h2>
-            <p class="">This is a temporary email service that uses Cloudflare Workers to create a temporary email address and view the received email in web browser.</p>
+<main class="bg-gradient-to-b from-white to-gray-50 dark:from-slate-900 dark:to-slate-800">
+    <div class="container mx-auto max-w-6xl px-4 py-16">
+        <!-- Email Container Section -->
+        <div class="mb-16">
+            <Container client:load siteKey={env.PUBLIC_TURNSTILE_SITE_KEY} />
+        </div>
+
+        <!-- Features Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-16">
+            <!-- What is FakeMail -->
+            <div class="space-y-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center">
+                            <Mail size={24} className="text-white" />
+                        </div>
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">What is FakeMail?</h2>
+                    </div>
+                    <div class="bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-gray-200 dark:border-slate-700 rounded-2xl p-6">
+                        <p class="text-gray-700 dark:text-gray-300 mb-4">
+                            <strong class="text-gray-900 dark:text-white">FakeMail</strong> is a cutting-edge temporary email service that provides instant, secure, and anonymous email addresses that automatically self-destruct after 2 hours.
+                        </p>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                            Known by many names — tempmail, 10minutemail, throwaway email, burner mail, or trash-mail — FakeMail is the most advanced disposable email solution that protects you from spam while maintaining your privacy.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Use Cases -->
+                <div>
+                    <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
+                        <Users className="text-purple-500" size={28} />
+                        Perfect For
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-gray-200 dark:border-slate-700 rounded-xl p-4">
+                            <div class="flex items-start gap-3">
+                                <CheckCircle size={20} className="text-green-500 mt-1 flex-shrink-0" />
+                                <div>
+                                    <h4 class="font-semibold text-gray-900 dark:text-white">Online Registrations</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Sign up for forums, newsletters, and services without using your real email</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-gray-200 dark:border-slate-700 rounded-xl p-4">
+                            <div class="flex items-start gap-3">
+                                <CheckCircle size={20} className="text-green-500 mt-1 flex-shrink-0" />
+                                <div>
+                                    <h4 class="font-semibold text-gray-900 dark:text-white">Testing & Trials</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Test services with free trials without spam follow-up</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-gray-200 dark:border-slate-700 rounded-xl p-4">
+                            <div class="flex items-start gap-3">
+                                <CheckCircle size={20} className="text-green-500 mt-1 flex-shrink-0" />
+                                <div>
+                                    <h4 class="font-semibold text-gray-900 dark:text-white">Privacy Protection</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Avoid tracking and data collection from websites</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-gray-200 dark:border-slate-700 rounded-xl p-4">
+                            <div class="flex items-start gap-3">
+                                <CheckCircle size={20} className="text-green-500 mt-1 flex-shrink-0" />
+                                <div>
+                                    <h4 class="font-semibold text-gray-900 dark:text-white">WiFi & Downloads</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Access public WiFi and download content securely</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Why Choose Us -->
+            <div class="space-y-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                            <Lock size={24} className="text-white" />
+                        </div>
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Why Choose FakeMail?</h2>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-gray-200 dark:border-slate-700 rounded-xl p-6">
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🚀 Lightning Fast</h4>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">Generate temporary emails instantly without any registration or personal information required.</p>
+                        </div>
+                        <div class="bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-gray-200 dark:border-slate-700 rounded-xl p-6">
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🛡️ Maximum Privacy</h4>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">End-to-end encryption with Cloudflare Workers ensures your data stays private and secure.</p>
+                        </div>
+                        <div class="bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-gray-200 dark:border-slate-700 rounded-xl p-6">
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">⏰ Smart Auto-Delete</h4>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">All emails automatically disappear after 2 hours, leaving no trace behind.</p>
+                        </div>
+                        <div class="bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-gray-200 dark:border-slate-700 rounded-xl p-6">
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🌍 Global Access</h4>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">Access your temporary emails from anywhere in the world with 99.9% uptime guarantee.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Details -->
+        <div class="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-8 text-center">
+            <div class="flex items-center justify-center gap-3 mb-6">
+                <div class="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl flex items-center justify-center">
+                    <Globe size={24} className="text-white" />
+                </div>
+                <h2 class="text-3xl font-bold text-white">Powered by Cloudflare</h2>
+            </div>
+            <p class="text-white/80 text-lg max-w-3xl mx-auto">
+                Built on Cloudflare Workers infrastructure for maximum speed, reliability, and global coverage.
+                Your temporary emails are processed at the edge, ensuring minimal latency and maximum privacy.
+            </p>
+            <div class="flex flex-wrap justify-center gap-6 mt-8">
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl px-6 py-3">
+                    <div class="text-white font-semibold">99.9%</div>
+                    <div class="text-white/70 text-sm">Uptime</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl px-6 py-3">
+                    <div class="text-white font-semibold"><100ms</div>
+                    <div class="text-white/70 text-sm">Latency</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl px-6 py-3">
+                    <div class="text-white font-semibold">256-bit</div>
+                    <div class="text-white/70 text-sm">Encryption</div>
+                </div>
+            </div>
         </div>
     </div>
 </main>

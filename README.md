@@ -25,3 +25,8 @@ Fake Mail is licensed under the [MIT License](https://github.com/akshaythummar/f
 build commands :
 build -> cmd /c "d: && cd d:\THUMMAR\fakemail\app && npm run build"
 deploy-> cmd /c "d: && cd d:\THUMMAR\fakemail\app && npx wrangler pages deployment create --commit-dirty=true"
+
+
+what to change when deploy to another worker :
+- update wrangler.toml of both /app and /mailbox
+- 
