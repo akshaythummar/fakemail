@@ -66,7 +66,7 @@ export function MailList({ items, updateStatus = () => {} }: MailListProps) {
                                         'ml-auto text-xs',
                                         mail.selected === item.message_id
                                             ? 'text-foreground'
-                                            : 'text-muted-foreground'
+                                            : 'text-gray-400'
                                     )}
                                 >
                                     {dayjs(item.received_at).fromNow()}

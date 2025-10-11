@@ -95,7 +95,7 @@ export const Accounts = ({ list = [] }: AccountsProps) => {
                     <div className='w-5 h-5 rounded-full shrink-0 overflow-hidden text-center leading-5 bg-slate-700 text-white text-xs uppercase'>{account.email_address.substring(0, 1)}</div>
                         <div className='flex-1 w-0 truncate'>{account.email_address}</div>
                     </div>
-                    <div className='col-span-2 leading-4 py-2 text-gray-600 dark:text-gray-400 text-xs'>{dayjs.utc(account.created_at).local().format('YYYY-MM-DD HH:mm:ss')}</div>
+                    <div className='col-span-2 leading-4 py-2 text-gray-400 text-xs'>{dayjs.utc(account.created_at).local().format('YYYY-MM-DD HH:mm')}</div>
                     <div className='col-span-5 leading-4 py-2 whitespace-pre-wrap'>{account.alias}</div>
                     <div className='col-span-1'>
                         <Button variant='ghost' size='icon' onClick={() => toEdit(account)}><FilePenLine className='h-4 w-4' /></Button>

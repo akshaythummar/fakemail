@@ -12,21 +12,32 @@ dayjs.extend(utc);
 const countDownTime = 30;
 
 const CountdownNumber = memo(({ value }: { value: number }) => (<span className='text-green-600 mx-1'>{value}</span>));
-const CountDownComp = (({ value }: { value: number }) => {
-    const [countDown, setCountDown] = useState<number>(countDownTime);
+const CountDownComp = ({ value }: { value: number }) => {
+    const [countDown, setCountDown] = useState<number>(value);
+
     useEffect(() => {
         setCountDown(value);
+    }, [value]);
+
+    useEffect(() => {
+        if (countDown <= 0) return;
+
         const intervalId = setInterval(() => {
-            setCountDown((prevCount) => prevCount - 1);
+            setCountDown((prevCount) => {
+                const newCount = prevCount - 1;
+                return newCount < 0 ? 0 : newCount;
+            });
         }, 1000);
+
         return () => {
             clearInterval(intervalId);
         };
-    }, [value]);
+    }, [countDown]);
+
     return (
         <CountdownNumber value={countDown} />
     );
-});
+};
 const MailCardComp = memo(({ mails, toDelete }: { mails: any[], toDelete: (mail: any) => void}) => mails.map((mail: any, index: number) => {
     if (mail) {
         return (
@@ -35,7 +46,7 @@ const MailCardComp = memo(({ mails, toDelete }: { mails: any[], toDelete: (mail:
                 sender={mail.sender}
                 subject={mail.subject}
                 name={mail.name}
-                date={dayjs.utc(mail.date).local().format('YYYY-MM-DD HH:mm:ss')}
+                date={dayjs.utc(mail.date).local().format('YYYY-MM-DD HH:mm')}
                 content={mail['content-plain-formatted'] || mail['content-plain'] || mail['content-html'] || mail.content || ''}
                 defaultShow={index === 0}
                 toDelete={() => toDelete(mail)}
@@ -73,7 +84,6 @@ export default () => {
                 const arr = data.mails.filter((e: any) => e);
                 arr.sort((a: any, b: any) => dayjs(b.date).unix() - dayjs(a.date).unix());
                 setMails(arr);
-                if (arr.length) clearInterval(intervalId.current);
             } else {
                 setMails([]);
             }
@@ -139,7 +149,7 @@ export default () => {
                         </div>
                     </div>
                     <div className='flex gap-3 items-center'>
-                        {(intervalStop.current < 15 && !mails.length && !loading) && (
+                        {(intervalStop.current < 15 && !loading) && (
                             <div className='hidden sm:flex items-center text-sm text-gray-600 dark:text-gray-400'>
                                 <div className="animate-ping w-2 h-2 rounded-full bg-green-400 mr-2"></div>
                                 Auto-refresh in <CountDownComp value={countDown.current} />s

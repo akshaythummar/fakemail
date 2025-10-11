@@ -236,8 +236,8 @@ export function MailDisplay({ mail, currentAccount, toDelete, handleUnread }: Ma
                             </Avatar>
                             <div className='grid gap-1'>
                                 <div className='flex gap-1 items-center text-xs'>
-                                    <span className='font-semibold'>{mail.senderName || mail.sender}</span>
-                                    {mail.senderName && <span className='text-gray-400'>&lt;{mail.sender}&gt;</span>}
+                                    <span className='font-semibold text-gray-500 dark:text-gray-400'>{mail.senderName || mail.sender}</span>
+                                    {mail.senderName && <span className='text-gray-400'><{mail.sender}></span>}
                                 </div>
                                 <div className='line-clamp-1 text-xs'>
                                     {mail.subject}
@@ -263,11 +263,11 @@ export function MailDisplay({ mail, currentAccount, toDelete, handleUnread }: Ma
                             </div>
                         </div>
                         {mail.received_at && (
-                            <div className='ml-auto text-xs text-muted-foreground'>
+                            <div className='ml-auto text-xs text-gray-400'>
                                 {dayjs
                                     .utc(mail.received_at)
                                     .local()
-                                    .format('YYYY-MM-DD HH:mm:ss')}
+                                    .format('YYYY-MM-DD HH:mm')}
                             </div>
                         )}
                     </div>

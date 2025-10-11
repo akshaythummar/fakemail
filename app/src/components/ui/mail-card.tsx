@@ -117,7 +117,7 @@ export const MailCard = ({
                     <div className='text-sm font-semibold'>{subject}</div>
                 </div>
                 <div className='flex gap-1.5 justify-between border-t pt-1 sm:border-none sm:pt-0 items-center shrink-0'>
-                    <div className='text-xs text-gray-600 whitespace-nowrap'>
+                    <div className='text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap'>
                         {date}
                     </div>
                     <Button
