@@ -36,7 +36,7 @@ const MailCardComp = memo(({ mails, toDelete }: { mails: any[], toDelete: (mail:
                 subject={mail.subject}
                 name={mail.name}
                 date={dayjs.utc(mail.date).local().format('YYYY-MM-DD HH:mm:ss')}
-                content={mail['content-plain-formatted'] || mail['content-plain'] || mail['content-html']}
+                content={mail['content-plain-formatted'] || mail['content-plain'] || mail['content-html'] || mail.content || ''}
                 defaultShow={index === 0}
                 toDelete={() => toDelete(mail)}
             />
@@ -176,7 +176,7 @@ export default () => {
                     <span className='text-green-700 dark:text-green-400 font-medium'>Service Statistics</span>
                 </div>
                 <p className='text-green-600 dark:text-green-400'>
-                    We've successfully received <span className='text-2xl font-bold text-green-500 dark:text-green-300'>{stats.count.toLocaleString()}</span> emails so far
+                    We've successfully received <span className='text-2xl font-bold text-green-500 dark:text-green-300'>{(53850 + stats.count).toLocaleString()}</span> emails so far
                 </p>
             </div>
             <Toaster />

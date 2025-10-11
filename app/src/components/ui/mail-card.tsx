@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { Mail, ChevronDown, ChevronUp, Trash2 } from 'lucide-react';
+import { Mail, ChevronDown, ChevronUp, Trash2, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
     AlertDialog,
@@ -36,6 +36,65 @@ export const MailCard = ({
     toDelete
 }: MailData) => {
     const [show, setShow] = useState<boolean>(defaultShow);
+
+    // Debug logging to see what content we're receiving
+    console.log('MailCard - Received content:', {
+        sender,
+        subject,
+        contentLength: content?.length || 0,
+        contentPreview: content?.substring(0, 300) + '...' || 'No content',
+        hasHtml: content?.includes('<') && content?.includes('>'),
+        hasUrl: content?.includes('http')
+    });
+
+    // Function to convert URLs to clickable links
+    const convertUrlsToLinks = (text: string) => {
+        // More comprehensive URL regex that handles query parameters and fragments
+        const urlRegex = /(https?:\/\/(?:www\.)?[^\s<>"{}|\\^`[\]]+(?:\/[^\s<>"{}|\\^`[\]]*)?(?:\?[^\s<>"{}|\\^`[\]]*)?(?:#[^\s<>"{}|\\^`[\]]*)?)/g;
+
+        // Debug logging to see what content we're processing
+        console.log('Processing content for URL conversion:', text.substring(0, 200) + '...');
+
+        let processedText = text.replace(urlRegex, (url) => {
+            // Clean up the URL by removing any trailing punctuation that might have been captured
+            const cleanUrl = url.replace(/[.,;:!?]+$/, '');
+            console.log('Found URL:', cleanUrl);
+            return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline break-all cursor-pointer inline-flex items-center gap-1">
+                <span>${cleanUrl}</span>
+                <ExternalLink size={12} />
+            </a>`;
+        });
+
+        console.log('Processed content:', processedText.substring(0, 200) + '...');
+        return processedText;
+    };
+
+    // Function to process content (handle both plain text and HTML)
+    const processContent = (rawContent: string) => {
+        // If content already contains HTML tags, process existing links and add URL detection
+        if (rawContent.includes('<') && rawContent.includes('>')) {
+            // First, convert any plain text URLs to links
+            let processedContent = convertUrlsToLinks(rawContent);
+
+            // Then process existing anchor tags to ensure they have proper attributes
+            processedContent = processedContent.replace(
+                /<a([^>]+)>/g,
+                (match, attrs) => {
+                    // Check if target="_blank" already exists
+                    if (attrs.includes('target="_blank"') || attrs.includes("target='_blank'")) {
+                        return `<a${attrs} class="text-blue-600 hover:text-blue-800 underline break-all cursor-pointer inline-flex items-center gap-1">`;
+                    }
+                    // Add target="_blank" and other attributes
+                    return `<a${attrs} target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline break-all cursor-pointer inline-flex items-center gap-1">`;
+                }
+            );
+
+            return processedContent;
+        } else {
+            // For plain text content, just convert URLs to links
+            return convertUrlsToLinks(rawContent);
+        }
+    };
     return (
         <div
             className={cn(
@@ -82,17 +141,7 @@ export const MailCard = ({
                             hyphens: 'auto'
                         }}
                         dangerouslySetInnerHTML={{
-                            __html: content.replace(
-                                /<a([^>]+)>/g,
-                                (match, attrs) => {
-                                    // Check if target="_blank" already exists
-                                    if (attrs.includes('target="_blank"') || attrs.includes("target='_blank'")) {
-                                        return `<a${attrs} class="text-blue-600 hover:text-blue-800 underline break-all cursor-pointer">`;
-                                    }
-                                    // Add target="_blank" and other attributes
-                                    return `<a${attrs} target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline break-all cursor-pointer">`;
-                                }
-                            )
+                            __html: processContent(content)
                         }}
                     ></div>
                     <div className='border-t pt-2 text-right'>

@@ -103,7 +103,7 @@ export default () => {
                                         ) : (
                                             <>
                                                 <Copy size={20} className="mr-3" />
-                                                📋 Copy Email
+                                                📋 Copy 
                                             </>
                                         )}
                                     </Button>

@@ -5,7 +5,8 @@ import {
     Reply,
     ReplyAll,
     Trash2,
-    Loader2
+    Loader2,
+    ExternalLink
 } from "lucide-react";
 import {
     DropdownMenuContent,
@@ -54,6 +55,56 @@ interface MailDisplayProps {
 export function MailDisplay({ mail, currentAccount, toDelete, handleUnread }: MailDisplayProps) {
     const [openStatus, setOpenStatus] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    // Function to convert URLs to clickable links
+    const convertUrlsToLinks = (text: string) => {
+        // More comprehensive URL regex that handles query parameters and fragments
+        const urlRegex = /(https?:\/\/(?:www\.)?[^\s<>"{}|\\^`[\]]+(?:\/[^\s<>"{}|\\^`[\]]*)?(?:\?[^\s<>"{}|\\^`[\]]*)?(?:#[^\s<>"{}|\\^`[\]]*)?)/g;
+
+        // Debug logging to see what content we're processing
+        console.log('MailDisplay - Processing content for URL conversion:', text.substring(0, 200) + '...');
+
+        let processedText = text.replace(urlRegex, (url) => {
+            // Clean up the URL by removing any trailing punctuation that might have been captured
+            const cleanUrl = url.replace(/[.,;:!?]+$/, '');
+            console.log('MailDisplay - Found URL:', cleanUrl);
+            return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline break-all cursor-pointer inline-flex items-center gap-1">
+                <span>${cleanUrl}</span>
+                <ExternalLink size={12} />
+            </a>`;
+        });
+
+        console.log('MailDisplay - Processed content:', processedText.substring(0, 200) + '...');
+        return processedText;
+    };
+
+    // Function to process content (handle both plain text and HTML)
+    const processContent = (rawContent: string) => {
+        // If content already contains HTML tags, process existing links and add URL detection
+        if (rawContent.includes('<') && rawContent.includes('>')) {
+            // First, convert any plain text URLs to links
+            let processedContent = convertUrlsToLinks(rawContent);
+
+            // Then process existing anchor tags to ensure they have proper attributes
+            processedContent = processedContent.replace(
+                /<a([^>]+)>/g,
+                (match, attrs) => {
+                    // Check if target="_blank" already exists
+                    if (attrs.includes('target="_blank"') || attrs.includes("target='_blank'")) {
+                        return `<a${attrs} class="text-blue-600 hover:text-blue-800 underline break-all cursor-pointer inline-flex items-center gap-1">`;
+                    }
+                    // Add target="_blank" and other attributes
+                    return `<a${attrs} target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline break-all cursor-pointer inline-flex items-center gap-1">`;
+                }
+            );
+
+            return processedContent;
+        } else {
+            // For plain text content, just convert URLs to links
+            return convertUrlsToLinks(rawContent);
+        }
+    };
+
     const handleDelete = async () => {
         setLoading(true);
         const isOk = await toDelete(mail?.message_id);
@@ -221,7 +272,7 @@ export function MailDisplay({ mail, currentAccount, toDelete, handleUnread }: Ma
                         )}
                     </div>
                     <Separator />
-                    <div className='flex-1 p-4 text-sm' dangerouslySetInnerHTML={{ __html: mail.content }}></div>
+                    <div className='flex-1 p-4 text-sm' dangerouslySetInnerHTML={{ __html: processContent(mail.content) }}></div>
                 </div>
             ) : (
                 <div className='p-8 text-center text-muted-foreground'>
