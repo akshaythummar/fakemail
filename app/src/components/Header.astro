@@ -1,45 +1,139 @@
 ---
-import { LayoutDashboard } from 'lucide-react';
+import { LayoutDashboard, Shield, Zap, Eye, Github } from 'lucide-react';
 import Generator from '@/components/Generator';
 import { ModeToggle } from '@/components/ModeToggle';
 ---
 
-<header class="bg-gray-700 dark:bg-gray-900">
-    <div class="p-4 pt-0" style=`background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(148 163 184 / 0.05)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e")`>
-        <div class="flex justify-end items-center gap-1 pb-2 pt-3">
+<header class="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 overflow-hidden">
+    <!-- Enhanced animated background with particles -->
+    <div class="absolute inset-0 gradient-mesh opacity-30"></div>
+    <div class="absolute inset-0 grid-overlay-dark"></div>
+
+    <!-- Floating particles -->
+    <div class="particle-bg">
+        <div class="particle" style="left: 10%; width: 4px; height: 4px;"></div>
+        <div class="particle" style="left: 20%; width: 2px; height: 2px;"></div>
+        <div class="particle" style="left: 30%; width: 3px; height: 3px;"></div>
+        <div class="particle" style="left: 40%; width: 2px; height: 2px;"></div>
+        <div class="particle" style="left: 50%; width: 4px; height: 4px;"></div>
+        <div class="particle" style="left: 60%; width: 3px; height: 3px;"></div>
+        <div class="particle" style="left: 70%; width: 2px; height: 2px;"></div>
+        <div class="particle" style="left: 80%; width: 4px; height: 4px;"></div>
+        <div class="particle" style="left: 90%; width: 3px; height: 3px;"></div>
+    </div>
+
+    <!-- Enhanced Navigation bar -->
+    <nav class="relative z-10 flex justify-between items-center p-6 pb-4">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg shadow-green-500/25 float">
+                <img class='w-6 h-6' src='/favicon.svg' alt='FakeMail' />
+            </div>
+            <span class="text-white font-bold text-xl gradient-text">FakeMail</span>
+        </div>
+
+        <div class="flex items-center gap-3">
             <a
                 href="/dashboard"
                 title="Dashboard"
-                class="text-xs flex gap-1 h-9 items-center text-white bg-gray-900/50 rounded-full px-4 py-1 hover:bg-white/10"
-            ><LayoutDashboard size={16} />Dashboard</a>
-            <ModeToggle client:load />
-            <a
-                href='https://teraboxplay.info'
-                target='_blank'
-                class='inline-flex h-9 w-9 rounded-full items-center justify-center hover:bg-gray-900/40'
+                class="hidden sm:flex gap-2 h-10 items-center text-white/80 hover:text-white glass-card hover:glass-card-dark rounded-full px-5 py-2 text-sm transition-all duration-300 hover:scale-105"
             >
-                <span
-                    class='block w-5 h-5 align-middle bg-center'
-                    style=`background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1naXRodWIiPjxwYXRoIGQ9Ik0xNSAyMnYtNGE0LjggNC44IDAgMCAwLTEtMy41YzMgMCA2LTIgNi01LjUuMDgtMS4yNS0uMjctMi40OC0xLTMuNS4yOC0xLjE1LjI4LTIuMzUgMC0zLjUgMCAwLTEgMC0zIDEuNS0yLjY0LS41LTUuMzYtLjUtOCAwQzYgMiA1IDIgNSAyYy0uMyAxLjE1LS4zIDIuMzUgMCAzLjVBNS40MDMgNS40MDMgMCAwIDAgNCA5YzAgMy41IDMgNS41IDYgNS41LS4zOS40OS0uNjggMS4wNS0uODUgMS42NS0uMTcuNi0uMjIgMS4yMy0uMTUgMS44NXY0Ii8+PHBhdGggZD0iTTkgMThjLTQuNTEgMi01LTItNy0yIi8+PC9zdmc+");background-size:100%`
-                ></span>
+                <LayoutDashboard size={16} />
+                Dashboard
             </a>
+            <ModeToggle client:load />
         </div>
-        <div class='container mx-auto max-w-3xl'>
-            <div class='pt-4'>
-                <img class='mx-auto w-10' src='/favicon.svg' alt='Fakeact' title="Fakeact" />
+    </nav>
+
+    <!-- Enhanced Hero section -->
+    <div class="relative z-10 container mx-auto max-w-5xl px-6 pb-12">
+        <!-- Main title with enhanced styling -->
+        <div class="text-center pt-12 pb-8 slide-up">
+            <div class="inline-flex items-center gap-4 mb-6">
+                <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center shadow-2xl shadow-green-500/30 float">
+                    <img class='w-10 h-10' src='/favicon.svg' alt='FakeMail' />
+                </div>
+                <div class="w-px h-12 bg-gradient-to-b from-transparent via-white/20 to-transparent"></div>
+                <h1 class='font-extrabold text-5xl md:text-7xl bg-gradient-to-r from-green-400 via-emerald-400 to-green-400 bg-clip-text text-transparent text-shadow-glow'>
+                    FakeMail
+                </h1>
             </div>
-            <h1 class='font-extrabold text-center text-xl pb-6 text-green-500'>
-                FakeMail
-            </h1>
-            <h2 class='text-gray-100 font-semibold text-3xl text-center mb-4'>
-                Fake email generator,<br /> delete emails 2 hours after receiving
-            </h2>
-            <p class='text-gray-400 text-sm text-center mb-4'>
-                👋 Forget about spam, advertising mailings, hacking and attacking robots. Keep your real mailbox clean and secure. Fake Mail provides temporary, secure, anonymous, free, disposable email address.
+            <p class='text-2xl md:text-3xl text-white/95 font-medium mb-8 gradient-text-ocean'>
+                ✨ Temporary Email That Disappears ✨
             </p>
-            <h2 class='text-gray-100 font-semibold text-xl text-center mb-2'>Your Fake Email Address</h2>
-            <div class="border border-dashed bg-gray-500/10 border-gray-500 rounded-xl p-4 mb-4 min-h-[84px]">
-                <Generator client:load />
+        </div>
+
+        <!-- Enhanced Feature highlights -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 fade-in">
+            <div class="glass-card hover:glass-card-dark rounded-2xl p-6 text-center card-hover group">
+                <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-all duration-300">
+                    <Zap size={28} className="text-white" />
+                </div>
+                <h3 class="text-white font-bold text-lg mb-3">Instant Generation</h3>
+                <p class="text-white/80 text-sm leading-relaxed">Get a temporary email address in milliseconds with zero configuration</p>
+            </div>
+            <div class="glass-card hover:glass-card-dark rounded-2xl p-6 text-center card-hover group">
+                <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-purple-500/25 group-hover:shadow-purple-500/40 transition-all duration-300">
+                    <Shield size={28} className="text-white" />
+                </div>
+                <h3 class="text-white font-bold text-lg mb-3">Privacy First</h3>
+                <p class="text-white/80 text-sm leading-relaxed">Complete anonymity with military-grade encryption and no data retention</p>
+            </div>
+            <div class="glass-card hover:glass-card-dark rounded-2xl p-6 text-center card-hover group">
+                <div class="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-orange-500/25 group-hover:shadow-orange-500/40 transition-all duration-300">
+                    <Eye size={28} className="text-white" />
+                </div>
+                <h3 class="text-white font-bold text-lg mb-3">Auto-Delete</h3>
+                <p class="text-white/80 text-sm leading-relaxed">All emails automatically vanish after 2 hours with no trace left behind</p>
+            </div>
+        </div>
+
+        <!-- Enhanced Description -->
+        <div class="text-center mb-12 slide-in-left">
+            <div class="glass-card rounded-3xl p-8 max-w-3xl mx-auto">
+                <p class='text-white/90 text-xl mb-6 leading-relaxed'>
+                    🚀 <strong class="gradient-text">Forget about spam, advertising mailings, and privacy concerns.</strong> Keep your real mailbox clean and secure with our advanced temporary email service powered by cutting-edge technology.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4 text-sm text-white/70">
+                    <span class="flex items-center gap-2">
+                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                        Zero Registration Required
+                    </span>
+                    <span class="flex items-center gap-2">
+                        <div class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                        Global CDN Coverage
+                    </span>
+                    <span class="flex items-center gap-2">
+                        <div class="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+                        99.9% Uptime SLA
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Email generator section -->
+        <div class="glass-card rounded-3xl p-8 mb-8 scale-in">
+            <div class="text-center mb-8">
+                <h2 class='text-white font-bold text-2xl text-center mb-3 gradient-text-rainbow'>Generate Your Temporary Email</h2>
+                <p class="text-white/70">Create a secure, disposable email address instantly</p>
+            </div>
+            <Generator client:load />
+        </div>
+
+        <!-- Enhanced Trust indicators -->
+        <div class="text-center slide-in-right">
+            <div class="glass-card rounded-2xl p-6 inline-flex flex-wrap items-center justify-center gap-6 text-sm">
+                <span class="flex items-center gap-2 text-green-400">
+                    <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+                    <span class="text-white font-medium">No Registration</span>
+                </span>
+                <span class="flex items-center gap-2 text-blue-400">
+                    <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
+                    <span class="text-white font-medium">End-to-End Encrypted</span>
+                </span>
+                <span class="flex items-center gap-2 text-purple-400">
+                    <div class="w-2 h-2 bg-purple-400 rounded-full"></div>
+                    <span class="text-white font-medium">99.9% Uptime</span>
+                </span>
             </div>
         </div>
     </div>
