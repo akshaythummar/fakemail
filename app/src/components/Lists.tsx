@@ -11,6 +11,48 @@ dayjs.extend(utc);
 
 const countDownTime = 30;
 
+// Function to clean email content before processing
+const cleanEmailContent = (content: string): string => {
+    if (!content) return '';
+
+    // Decode HTML entities
+    let cleaned = content.replace(/</g, '<')
+                       .replace(/>/g, '>')
+                       .replace(/&/g, '&')
+                       .replace(/"/g, '"')
+                       .replace(/&#39;/g, "'");
+
+    // Fix common email encoding issues
+    cleaned = cleaned.replace(/=\n/g, '');
+    cleaned = cleaned.replace(/=3D/g, '=');
+    cleaned = cleaned.replace(/=20/g, ' ');
+
+    // Remove null bytes and control characters
+    cleaned = cleaned.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
+
+    return cleaned.trim();
+};
+
+// Function to get the best available email content
+const getBestEmailContent = (mail: any): string => {
+    // Priority order: HTML > Plain Formatted > Plain > Raw Content
+    const content = mail['content-html'] ||
+                   mail['content-plain-formatted'] ||
+                   mail['content-plain'] ||
+                   mail.content ||
+                   '';
+
+    if (!content) return '';
+
+    // If we have HTML content, return it as-is for proper rendering
+    if (mail['content-html']) {
+        return mail['content-html'];
+    }
+
+    // For plain text content, clean it up
+    return cleanEmailContent(content);
+};
+
 const CountdownNumber = memo(({ value }: { value: number }) => (<span className='text-green-600 mx-1'>{value}</span>));
 const CountDownComp = ({ value }: { value: number }) => {
     const [countDown, setCountDown] = useState<number>(value);
@@ -47,7 +89,7 @@ const MailCardComp = memo(({ mails, toDelete }: { mails: any[], toDelete: (mail:
                 subject={mail.subject}
                 name={mail.name}
                 date={dayjs.utc(mail.date).local().format('YYYY-MM-DD HH:mm')}
-                content={mail['content-plain-formatted'] || mail['content-plain'] || mail['content-html'] || mail.content || ''}
+                content={getBestEmailContent(mail)}
                 defaultShow={index === 0}
                 toDelete={() => toDelete(mail)}
             />

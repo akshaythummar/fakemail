@@ -1,6 +1,48 @@
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Mail, ChevronDown, ChevronUp, Trash2, ExternalLink } from 'lucide-react';
+
+// Function to clean email content before processing
+const cleanEmailContent = (content: string): string => {
+    if (!content) return '';
+
+    // Decode HTML entities
+    let cleaned = content.replace(/</g, '<')
+                       .replace(/>/g, '>')
+                       .replace(/&/g, '&')
+                       .replace(/"/g, '"')
+                       .replace(/&#39;/g, "'");
+
+    // Fix common email encoding issues
+    cleaned = cleaned.replace(/=\n/g, '');
+    cleaned = cleaned.replace(/=3D/g, '=');
+    cleaned = cleaned.replace(/=20/g, ' ');
+
+    // Remove null bytes and control characters
+    cleaned = cleaned.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
+
+    return cleaned.trim();
+};
+
+// Function to get the best available email content
+const getBestEmailContent = (mail: any): string => {
+    // Priority order: HTML > Plain Formatted > Plain > Raw Content
+    const content = mail['content-html'] ||
+                   mail['content-plain-formatted'] ||
+                   mail['content-plain'] ||
+                   mail.content ||
+                   '';
+
+    if (!content) return '';
+
+    // If we have HTML content, return it as-is for proper rendering
+    if (mail['content-html']) {
+        return mail['content-html'];
+    }
+
+    // For plain text content, clean it up
+    return cleanEmailContent(content);
+};
 import { Button } from '@/components/ui/button';
 import {
     AlertDialog,
@@ -71,23 +113,38 @@ export const MailCard = ({
 
     // Function to process content (handle both plain text and HTML)
     const processContent = (rawContent: string) => {
-        // If content already contains HTML tags, process existing links and add URL detection
-        if (rawContent.includes('<') && rawContent.includes('>')) {
-            // First, convert any plain text URLs to links
-            let processedContent = convertUrlsToLinks(rawContent);
+        if (!rawContent) return '';
 
-            // Then process existing anchor tags to ensure they have proper attributes
+        // If content already contains HTML tags, clean and process it
+        if (rawContent.includes('<') && rawContent.includes('>')) {
+            let processedContent = rawContent;
+
+            // Remove script and style tags for security
+            processedContent = processedContent.replace(/<script[^>]*>.*?<\/script>/gis, '');
+            processedContent = processedContent.replace(/<style[^>]*>.*?<\/style>/gis, '');
+
+            // Process existing anchor tags to ensure they have proper attributes
             processedContent = processedContent.replace(
                 /<a([^>]+)>/g,
                 (match, attrs) => {
                     // Check if target="_blank" already exists
                     if (attrs.includes('target="_blank"') || attrs.includes("target='_blank'")) {
-                        return `<a${attrs} class="text-blue-600 hover:text-blue-800 underline break-all cursor-pointer inline-flex items-center gap-1">`;
+                        return `<a${attrs} class="text-blue-600 hover:text-blue-800 underline cursor-pointer">`;
                     }
                     // Add target="_blank" and other attributes
-                    return `<a${attrs} target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline break-all cursor-pointer inline-flex items-center gap-1">`;
+                    return `<a${attrs} target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline cursor-pointer">`;
                 }
             );
+
+            // Convert plain text URLs to links if not already in HTML
+            if (!processedContent.includes('<a')) {
+                processedContent = convertUrlsToLinks(processedContent);
+            }
+
+            // Clean up some common email HTML artifacts
+            processedContent = processedContent.replace(/=\n/g, '');
+            processedContent = processedContent.replace(/=3D/g, '=');
+            processedContent = processedContent.replace(/&/g, '&');
 
             return processedContent;
         } else {
@@ -141,7 +198,7 @@ export const MailCard = ({
                             hyphens: 'auto'
                         }}
                         dangerouslySetInnerHTML={{
-                            __html: processContent(content)
+                            __html: processContent(getBestEmailContent({ 'content-html': content }))
                         }}
                     ></div>
                     <div className='border-t pt-2 text-right'>
