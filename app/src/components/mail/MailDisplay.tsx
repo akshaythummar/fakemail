@@ -237,7 +237,7 @@ export function MailDisplay({ mail, currentAccount, toDelete, handleUnread }: Ma
                             <div className='grid gap-1'>
                                 <div className='flex gap-1 items-center text-xs'>
                                     <span className='font-semibold text-gray-500 dark:text-gray-400'>{mail.senderName || mail.sender}</span>
-                                    {mail.senderName && <span className='text-gray-400'><{mail.sender}></span>}
+                                    {mail.senderName && <span className='text-gray-400'>&lt;{mail.sender}&gt;</span>}
                                 </div>
                                 <div className='line-clamp-1 text-xs'>
                                     {mail.subject}

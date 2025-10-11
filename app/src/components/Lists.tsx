@@ -160,18 +160,12 @@ export default () => {
                             variant='outline'
                             onClick={refresh}
                             disabled={loading}
-                            className='bg-white/50 hover:bg-white/70 border-white/30'
+                            className='w-10 h-10 bg-gradient-to-r from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 dark:from-green-900/20 dark:to-emerald-900/20 dark:hover:from-green-800/30 dark:hover:to-emerald-800/30 border border-green-200 dark:border-green-800 rounded-xl p-0'
                         >
                             {loading ? (
-                                <>
-                                    <Loader2 size={16} className="animate-spin mr-2" />
-                                    Checking...
-                                </>
+                                <Loader2 size={16} className="animate-spin text-green-600" />
                             ) : (
-                                <>
-                                    <RefreshCw size={16} className="mr-2" />
-                                    Refresh
-                                </>
+                                <RefreshCw size={16} className="text-green-600" />
                             )}
                         </Button>
                     </div>
