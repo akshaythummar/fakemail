@@ -54,50 +54,56 @@ export default () => {
 
     return (
         <TooltipProvider delayDuration={0}>
-            <div className="w-full max-w-2xl mx-auto">
+            <div className="w-full max-w-3xl mx-auto">
                 <div className="relative">
-                    {/* Service Statistics Exact Theme */}
-                    <div className="bg-slate-800/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-green-400/40">
-                        {/* Header */}
-                        <div className="flex items-center justify-center gap-3 mb-6">
-                            <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                                <Mail className="text-white" size={18} />
+                    {/* Enhanced Generator Card */}
+                    <div className="glass-card-dark rounded-3xl p-8 shadow-2xl border-2 border-green-400/30 hover:border-green-400/50 transition-all duration-500 group">
+                        {/* Animated Header */}
+                        <div className="flex items-center justify-center gap-4 mb-8">
+                            <div className="w-12 h-12 bg-gradient-to-r from-green-400 to-emerald-400 rounded-2xl flex items-center justify-center shadow-lg shadow-green-400/25 group-hover:shadow-green-400/40 transition-all duration-300 float">
+                                <Mail className="text-white" size={24} />
                             </div>
-                            <span className="text-white text-base font-semibold">Your Temporary Email Address</span>
+                            <div className="text-center">
+                                <h3 className="text-white text-xl font-bold gradient-text">Your Temporary Email Address</h3>
+                                <p className="text-white/60 text-sm">Ready to receive emails instantly</p>
+                            </div>
                         </div>
 
-                        {/* Email Input */}
+                        {/* Enhanced Email Input */}
                         <div className="relative mb-8">
-                            <div className="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none">
-                                <div className="w-3 h-3 bg-green-300 rounded-full animate-pulse shadow-lg"></div>
+                            <div className="absolute inset-y-0 left-0 pl-8 flex items-center pointer-events-none">
+                                <div className="w-4 h-4 bg-green-300 rounded-full animate-pulse shadow-lg shadow-green-300/50"></div>
                             </div>
                             <Input
-                                className="w-full pl-12 pr-6 py-5 text-center text-gray-800 bg-white/95 backdrop-blur-sm border-0 rounded-2xl text-lg font-semibold shadow-lg focus:ring-2 focus:ring-green-300 focus:outline-none transition-all duration-200"
+                                className="w-full pl-16 pr-8 py-6 text-center text-gray-800 bg-white/98 backdrop-blur-sm border-2 border-green-200/50 rounded-2xl text-xl font-bold shadow-xl focus:ring-4 focus:ring-green-300/30 focus:outline-none focus:border-green-400 transition-all duration-300 hover:shadow-2xl hover:bg-white"
                                 readOnly
                                 onFocus={handleFocus}
                                 value={address}
-                                placeholder="Generating your email..."
+                                placeholder="🔄 Generating your secure email..."
                             />
+                            {/* Decorative elements */}
+                            <div className="absolute top-2 right-2 w-3 h-3 bg-green-400/30 rounded-full animate-ping"></div>
+                            <div className="absolute bottom-2 left-2 w-2 h-2 bg-blue-400/30 rounded-full animate-pulse"></div>
                         </div>
 
-                        {/* Action Buttons */}
-                        <div className="flex gap-4 justify-center mb-6">
+                        {/* Enhanced Action Buttons */}
+                        <div className="flex gap-6 justify-center mb-8">
                             <Tooltip>
                                 <TooltipTrigger asChild>
                                     <Button
                                         onClick={() => handleCopy(address)}
                                         disabled={!address}
-                                        className="flex-1 max-w-[160px] bg-white/90 hover:bg-white text-green-700 py-4 px-6 rounded-2xl transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105"
+                                        className="flex-1 max-w-[180px] bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white py-5 px-8 rounded-2xl transition-all duration-300 font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 btn-glow disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                                     >
                                         {isCopy ? (
                                             <>
-                                                <Check size={18} className="mr-2" />
-                                                Copied!
+                                                <Check size={20} className="mr-3" />
+                                                ✅ Copied!
                                             </>
                                         ) : (
                                             <>
-                                                <Copy size={18} className="mr-2" />
-                                                Copy Email
+                                                <Copy size={20} className="mr-3" />
+                                                📋 Copy Email
                                             </>
                                         )}
                                     </Button>
@@ -112,17 +118,17 @@ export default () => {
                                     <Button
                                         onClick={() => setOpen(true)}
                                         disabled={isGenerating}
-                                        className="flex-1 max-w-[160px] bg-gradient-to-r from-gray-800 to-gray-900 hover:from-black hover:to-gray-800 text-white py-4 px-6 rounded-2xl transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105"
+                                        className="flex-1 max-w-[180px] bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white py-5 px-8 rounded-2xl transition-all duration-300 font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 btn-glow-purple disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                                     >
                                         {isGenerating ? (
                                             <>
-                                                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
-                                                Generating...
+                                                <div className="w-5 h-5 border-3 border-white/30 border-t-white rounded-full animate-spin mr-3" />
+                                                ⚡ Generating...
                                             </>
                                         ) : (
                                             <>
-                                                <Sparkles size={18} className="mr-2" />
-                                                New Email
+                                                <Sparkles size={20} className="mr-3" />
+                                                ✨ New Email
                                             </>
                                         )}
                                     </Button>
@@ -133,21 +139,28 @@ export default () => {
                             </Tooltip>
                         </div>
 
-                        {/* Service Statistics Info */}
-                        <div className="text-center">
-                            <div className="flex items-center justify-center gap-6 text-white/90 text-sm">
-                                <span className="flex items-center gap-2">
-                                    <div className="w-2 h-2 bg-green-300 rounded-full"></div>
-                                    <span>Auto-expires in 2 hours</span>
-                                </span>
-                                <span className="flex items-center gap-2">
-                                    <div className="w-2 h-2 bg-green-300 rounded-full"></div>
-                                    <span>End-to-end encrypted</span>
-                                </span>
-                                <span className="flex items-center gap-2">
-                                    <div className="w-2 h-2 bg-green-300 rounded-full"></div>
-                                    <span>Instant delivery</span>
-                                </span>
+                        {/* Enhanced Service Statistics */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="glass-card rounded-xl p-4 text-center group/stat">
+                                <div className="w-8 h-8 bg-gradient-to-r from-red-400 to-pink-400 rounded-full flex items-center justify-center mx-auto mb-2 group-hover/stat:shadow-red-400/25 transition-all duration-300">
+                                    <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
+                                </div>
+                                <h4 className="text-white font-semibold text-sm mb-1">Auto-Expiry</h4>
+                                <p className="text-white/70 text-xs">2 Hours</p>
+                            </div>
+                            <div className="glass-card rounded-xl p-4 text-center group/stat">
+                                <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full flex items-center justify-center mx-auto mb-2 group-hover/stat:shadow-blue-400/25 transition-all duration-300">
+                                    <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
+                                </div>
+                                <h4 className="text-white font-semibold text-sm mb-1">Encryption</h4>
+                                <p className="text-white/70 text-xs">256-bit</p>
+                            </div>
+                            <div className="glass-card rounded-xl p-4 text-center group/stat">
+                                <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full flex items-center justify-center mx-auto mb-2 group-hover/stat:shadow-green-400/25 transition-all duration-300">
+                                    <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
+                                </div>
+                                <h4 className="text-white font-semibold text-sm mb-1">Delivery</h4>
+                                <p className="text-white/70 text-xs">Instant</p>
                             </div>
                         </div>
                     </div>
