@@ -462,3 +462,33 @@
     opacity: 0.5;
   }
 }
+
+/* Additional Mobile Responsive Fixes */
+@media (max-width: 640px) {
+  .glass-card {
+    margin: 0.25rem;
+    padding: 0.75rem;
+  }
+
+  .trading-card {
+    margin: 0.25rem;
+    padding: 0.75rem;
+  }
+
+  .btn-primary, .btn-secondary {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  .terminal-text {
+    font-size: 0.75rem;
+  }
+
+  .terminal-large {
+    font-size: 1rem;
+  }
+
+  .price-display {
+    font-size: 1.125rem;
+  }
+}

@@ -23,77 +23,81 @@ import { ModeToggle } from '@/components/ModeToggle';
     </div>
 
     <!-- Enhanced Navigation bar -->
-    <nav class="relative z-10 flex justify-between items-center p-6 pb-4">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg shadow-green-500/25 float">
-                <img class='w-6 h-6' src='/favicon.svg' alt='FakeMail' />
+    <nav class="relative z-10 flex justify-between items-center p-4 sm:p-6 pb-3 sm:pb-4">
+        <div class="flex items-center gap-2 sm:gap-3">
+            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg shadow-green-500/25 flex-shrink-0">
+                <img class='w-5 h-5 sm:w-6 sm:h-6' src='/favicon.svg' alt='FakeMail' />
             </div>
-            <span class="text-white font-bold text-xl gradient-text">FakeMail</span>
+            <span class="text-white font-bold text-lg sm:text-xl gradient-text">FakeMail</span>
         </div>
 
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 sm:gap-3">
             <a
                 href="/dashboard"
                 title="Dashboard"
-                class="hidden sm:flex gap-2 h-10 items-center text-white/80 hover:text-white glass-card hover:glass-card-dark rounded-full px-5 py-2 text-sm transition-all duration-300 hover:scale-105"
+                class="hidden sm:flex gap-2 h-8 sm:h-10 items-center text-white/80 hover:text-white glass-card hover:glass-card-dark rounded-full px-3 sm:px-5 py-1 sm:py-2 text-xs sm:text-sm transition-all duration-300 hover:scale-105"
             >
-                <LayoutDashboard size={16} />
-                Dashboard
+                <LayoutDashboard size={14} className="sm:hidden" />
+                <LayoutDashboard size={16} className="hidden sm:block" />
+                <span className="hidden sm:inline">Dashboard</span>
             </a>
             <ModeToggle client:load />
         </div>
     </nav>
 
     <!-- Enhanced Hero section -->
-    <div class="relative z-10 container mx-auto max-w-5xl px-6 pb-12">
+    <div class="relative z-10 container mx-auto max-w-5xl px-4 sm:px-6 pb-8 sm:pb-12">
         <!-- Main title with enhanced styling -->
-        <div class="text-center pt-12 pb-8 slide-up">
-            <div class="inline-flex items-center gap-4 mb-6">
-                <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center shadow-2xl shadow-green-500/30 float">
-                    <img class='w-10 h-10' src='/favicon.svg' alt='FakeMail' />
+        <div class="text-center pt-8 sm:pt-12 pb-6 sm:pb-8 slide-up">
+            <div class="inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-2xl shadow-green-500/30 flex-shrink-0">
+                    <img class='w-7 h-7 sm:w-10 sm:h-10' src='/favicon.svg' alt='FakeMail' />
                 </div>
-                <div class="w-px h-12 bg-gradient-to-b from-transparent via-white/20 to-transparent"></div>
-                <h1 class='font-extrabold text-5xl md:text-7xl bg-gradient-to-r from-green-400 via-emerald-400 to-green-400 bg-clip-text text-transparent text-shadow-glow'>
+                <div class="hidden sm:block w-px h-8 sm:h-12 bg-gradient-to-b from-transparent via-white/20 to-transparent"></div>
+                <h1 class='font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl bg-gradient-to-r from-green-400 via-emerald-400 to-green-400 bg-clip-text text-transparent text-shadow-glow'>
                     FakeMail
                 </h1>
             </div>
-            <p class='text-2xl md:text-3xl text-white/95 font-medium mb-8 gradient-text-ocean'>
+            <p class='text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/95 font-medium mb-6 sm:mb-8 gradient-text-ocean'>
                 ✨ Temporary Email That Disappears ✨
             </p>
         </div>
 
         <!-- Enhanced Feature highlights -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 fade-in">
-            <div class="glass-card hover:glass-card-dark rounded-2xl p-6 text-center card-hover group">
-                <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-all duration-300">
-                    <Zap size={28} className="text-white" />
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12 fade-in">
+            <div class="glass-card hover:glass-card-dark rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center card-hover group">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-xl shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-all duration-300">
+                    <Zap size={20} className="text-white sm:hidden" />
+                    <Zap size={28} className="text-white hidden sm:block" />
                 </div>
-                <h3 class="text-white font-bold text-lg mb-3">Instant Generation</h3>
-                <p class="text-white/80 text-sm leading-relaxed">Get a temporary email address in milliseconds with zero configuration</p>
+                <h3 class="text-white font-bold text-base sm:text-lg mb-2 sm:mb-3">Instant Generation</h3>
+                <p class="text-white/80 text-xs sm:text-sm leading-relaxed">Get a temporary email address in milliseconds with zero configuration</p>
             </div>
-            <div class="glass-card hover:glass-card-dark rounded-2xl p-6 text-center card-hover group">
-                <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-purple-500/25 group-hover:shadow-purple-500/40 transition-all duration-300">
-                    <Shield size={28} className="text-white" />
+            <div class="glass-card hover:glass-card-dark rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center card-hover group sm:col-span-2 lg:col-span-1">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-xl shadow-purple-500/25 group-hover:shadow-purple-500/40 transition-all duration-300">
+                    <Shield size={20} className="text-white sm:hidden" />
+                    <Shield size={28} className="text-white hidden sm:block" />
                 </div>
-                <h3 class="text-white font-bold text-lg mb-3">Privacy First</h3>
-                <p class="text-white/80 text-sm leading-relaxed">Complete anonymity with military-grade encryption and no data retention</p>
+                <h3 class="text-white font-bold text-base sm:text-lg mb-2 sm:mb-3">Privacy First</h3>
+                <p class="text-white/80 text-xs sm:text-sm leading-relaxed">Complete anonymity with military-grade encryption and no data retention</p>
             </div>
-            <div class="glass-card hover:glass-card-dark rounded-2xl p-6 text-center card-hover group">
-                <div class="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-orange-500/25 group-hover:shadow-orange-500/40 transition-all duration-300">
-                    <Eye size={28} className="text-white" />
+            <div class="glass-card hover:glass-card-dark rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center card-hover group sm:col-span-2 lg:col-span-1">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-xl shadow-orange-500/25 group-hover:shadow-orange-500/40 transition-all duration-300">
+                    <Eye size={20} className="text-white sm:hidden" />
+                    <Eye size={28} className="text-white hidden sm:block" />
                 </div>
-                <h3 class="text-white font-bold text-lg mb-3">Auto-Delete</h3>
-                <p class="text-white/80 text-sm leading-relaxed">All emails automatically vanish after 2 hours with no trace left behind</p>
+                <h3 class="text-white font-bold text-base sm:text-lg mb-2 sm:mb-3">Auto-Delete</h3>
+                <p class="text-white/80 text-xs sm:text-sm leading-relaxed">All emails automatically vanish after 2 hours with no trace left behind</p>
             </div>
         </div>
 
         <!-- Enhanced Description -->
-        <div class="text-center mb-12 slide-in-left">
-            <div class="glass-card rounded-3xl p-8 max-w-3xl mx-auto">
-                <p class='text-white/90 text-xl mb-6 leading-relaxed'>
+        <div class="text-center mb-8 sm:mb-12 slide-in-left">
+            <div class="glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 max-w-3xl mx-auto">
+                <p class='text-white/90 text-base sm:text-lg lg:text-xl mb-4 sm:mb-6 leading-relaxed'>
                     🚀 <strong class="gradient-text">Forget about spam, advertising mailings, and privacy concerns.</strong> Keep your real mailbox clean and secure with our advanced temporary email service powered by cutting-edge technology.
                 </p>
-                <div class="flex flex-wrap justify-center gap-4 text-sm text-white/70">
+                <div class="flex flex-wrap justify-center gap-3 sm:gap-4 text-xs sm:text-sm text-white/70">
                     <span class="flex items-center gap-2">
                         <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                         Zero Registration Required
@@ -111,17 +115,17 @@ import { ModeToggle } from '@/components/ModeToggle';
         </div>
 
         <!-- Enhanced Email generator section -->
-        <div class="glass-card rounded-3xl p-8 mb-8 scale-in">
-            <div class="text-center mb-8">
-                <h2 class='text-white font-bold text-2xl text-center mb-3 gradient-text-rainbow'>Generate Your Temporary Email</h2>
-                <p class="text-white/70">Create a secure, disposable email address instantly</p>
+        <div class="glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 scale-in">
+            <div class="text-center mb-4 sm:mb-6 lg:mb-8">
+                <h2 class='text-white font-bold text-xl sm:text-2xl text-center mb-2 sm:mb-3 gradient-text-rainbow'>Generate Your Temporary Email</h2>
+                <p class="text-white/70 text-sm sm:text-base">Create a secure, disposable email address instantly</p>
             </div>
             <Generator client:load />
         </div>
 
         <!-- Enhanced Trust indicators -->
         <div class="text-center slide-in-right">
-            <div class="glass-card rounded-2xl p-6 inline-flex flex-wrap items-center justify-center gap-6 text-sm">
+            <div class="glass-card rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-6 inline-flex flex-wrap items-center justify-center gap-3 sm:gap-4 lg:gap-6 text-xs sm:text-sm">
                 <span class="flex items-center gap-2 text-green-400">
                     <div class="w-2 h-2 bg-green-400 rounded-full"></div>
                     <span class="text-white font-medium">No Registration</span>

@@ -283,53 +283,60 @@ export function MailDisplay({ mail, currentAccount, toDelete, handleUnread }: Ma
             <Separator />
             {mail ? (
                 <div className='flex flex-1 flex-col'>
-                    <div className='flex items-start p-4'>
-                        <div className='flex items-start gap-4 text-sm'>
-                            <Avatar>
+                    <div className='flex flex-col sm:flex-row items-start p-3 sm:p-4 gap-3 sm:gap-4'>
+                        <div className='flex items-start gap-3 sm:gap-4 text-sm w-full sm:w-auto'>
+                            <Avatar className='w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0'>
                                 <AvatarImage alt={mail.senderName || mail.sender} />
-                                <AvatarFallback>
-                                    {(mail.senderName || mail.sender).split(' ').map((chunk) => chunk[0]).join('')}
+                                <AvatarFallback className='text-xs sm:text-sm'>
+                                    {(mail.senderName || mail.sender).split(' ').map((chunk) => chunk[0]).join('').substring(0, 2)}
                                 </AvatarFallback>
                             </Avatar>
-                            <div className='grid gap-1'>
-                                <div className='flex gap-1 items-center text-xs'>
-                                    <span className='font-semibold text-gray-500 dark:text-gray-400'>{mail.senderName || mail.sender}</span>
-                                    {mail.senderName && <span className='text-gray-400'>&lt;{mail.sender}&gt;</span>}
+                            <div className='grid gap-1 sm:gap-2 min-w-0 flex-1'>
+                                <div className='flex flex-col sm:flex-row sm:gap-1 items-start sm:items-center text-xs sm:text-sm'>
+                                    <span className='font-semibold text-gray-500 dark:text-gray-400 truncate'>{mail.senderName || mail.sender}</span>
+                                    {mail.senderName && <span className='text-gray-400 truncate sm:text-ellipsis'>({mail.sender})</span>}
                                 </div>
-                                <div className='line-clamp-1 text-xs'>
+                                <div className='line-clamp-1 sm:line-clamp-2 text-xs sm:text-sm font-medium text-gray-900 dark:text-white'>
                                     {mail.subject}
                                 </div>
-                                <div className='line-clamp-1 text-xs text-gray-400'>
+                                <div className='flex flex-col sm:flex-row sm:gap-1 text-xs text-gray-400'>
                                     <span className='font-medium text-gray-600 dark:text-gray-300'>
-                                        Recipient:
-                                    </span>{' '}
-                                    {currentAccount}
+                                        To:
+                                    </span>
+                                    <span className='truncate'>{currentAccount}</span>
                                     {mail.cc && (
                                         <>
-                                            <span className='ml-2 font-medium text-gray-600 dark:text-gray-300'>CC:</span>{' '}
-                                            {mail.cc}
+                                            <span className='font-medium text-gray-600 dark:text-gray-300 sm:ml-2'>CC:</span>
+                                            <span className='truncate'>{mail.cc}</span>
                                         </>
                                     )}
                                 </div>
-                                {/* <div className='line-clamp-1 text-xs text-gray-400'>
-                                    <span className='font-medium text-gray-600 dark:text-gray-300'>
-                                        Reply-To:
-                                    </span>{' '}
-                                    {mail.senderName || mail.sender}
-                                </div> */}
                             </div>
                         </div>
                         {mail.received_at && (
-                            <div className='ml-auto text-xs text-gray-400'>
+                            <div className='text-xs text-gray-400 whitespace-nowrap flex-shrink-0'>
                                 {dayjs
                                     .utc(mail.received_at)
                                     .local()
-                                    .format('YYYY-MM-DD HH:mm')}
+                                    .format('MMM DD, YYYY HH:mm')}
                             </div>
                         )}
                     </div>
                     <Separator />
-                    <div className='flex-1 p-4 text-sm' dangerouslySetInnerHTML={{ __html: processContent(getBestEmailContent(mail)) }}></div>
+                    <div className='flex-1 p-3 sm:p-4 overflow-y-auto'>
+                        <div
+                            className='text-sm sm:text-base leading-relaxed break-words overflow-wrap-anywhere max-w-full'
+                            style={{
+                                wordBreak: 'break-word',
+                                wordWrap: 'break-word',
+                                overflowWrap: 'break-word',
+                                hyphens: 'auto'
+                            }}
+                            dangerouslySetInnerHTML={{
+                                __html: processContent(getBestEmailContent(mail))
+                            }}
+                        />
+                    </div>
                 </div>
             ) : (
                 <div className='p-8 text-center text-muted-foreground'>
