@@ -492,3 +492,76 @@
     font-size: 1.125rem;
   }
 }
+
+/* Email Content Container Fixes */
+.mail-content-container {
+  max-width: 100% !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.mail-content-container * {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.mail-content-container img {
+  max-width: 100% !important;
+  height: auto !important;
+  width: auto !important;
+}
+
+.mail-content-container table {
+  max-width: 100% !important;
+  width: 100% !important;
+  table-layout: fixed !important;
+}
+
+.mail-content-container td,
+.mail-content-container th {
+  max-width: 100% !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+}
+
+.mail-content-container div {
+  max-width: 100% !important;
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+}
+
+/* Email iframe and embed fixes */
+.mail-content-container iframe,
+.mail-content-container embed,
+.mail-content-container object {
+  max-width: 100% !important;
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Email content overflow prevention */
+.prose {
+  max-width: 100% !important;
+}
+
+.prose * {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.prose img {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+.prose table {
+  max-width: 100% !important;
+  width: 100% !important;
+  table-layout: fixed !important;
+}
+
+.prose iframe {
+  max-width: 100% !important;
+  width: 100% !important;
+  height: auto !important;
+}

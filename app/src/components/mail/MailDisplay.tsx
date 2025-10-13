@@ -323,14 +323,12 @@ export function MailDisplay({ mail, currentAccount, toDelete, handleUnread }: Ma
                         )}
                     </div>
                     <Separator />
-                    <div className='flex-1 p-3 sm:p-4 overflow-y-auto'>
+                    <div className='flex-1 p-3 sm:p-4 overflow-y-auto min-h-0'>
                         <div
-                            className='text-sm sm:text-base leading-relaxed break-words overflow-wrap-anywhere max-w-full'
+                            className='mail-content-container prose text-sm sm:text-base leading-relaxed'
                             style={{
-                                wordBreak: 'break-word',
-                                wordWrap: 'break-word',
-                                overflowWrap: 'break-word',
-                                hyphens: 'auto'
+                                maxWidth: '100%',
+                                boxSizing: 'border-box'
                             }}
                             dangerouslySetInnerHTML={{
                                 __html: processContent(getBestEmailContent(mail))
