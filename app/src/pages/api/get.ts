@@ -2,7 +2,7 @@ import type { APIRoute, APIContext } from 'astro';
 import demo from '@/lib/demo';
 
 function validateString(str: string): boolean {
-    const regex = /^[a-zA-Z0-9]+\.[a-zA-Z0-9]+\d{3}$/;
+    const regex = /^[a-zA-Z0-9]+\.[a-zA-Z0-9]+\d{1,3}$/;
     return regex.test(str);
 }
 
