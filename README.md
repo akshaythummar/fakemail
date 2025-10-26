@@ -27,16 +27,19 @@ Fake Mail is licensed under the [MIT License](https://github.com/akshaythummar/f
 ----------------- deploy fresh app on new cloudflare account --------------
 
 npx wrangler kv namespace create POST_DB
+
 npm wrangler d1 create MAIL_DB
 
 # backend deployment 
 # change KV and D1 values in wrangler.toml
 cd mailbox
+
 npx wrangler deploy
 
 # frontend deployment
 # change KV and D1 values in wrangler.toml 
 build -> cmd /c "d: && cd d:\THUMMAR\fakemail\app && npm run build"
+
 deploy-> cmd /c "d: && cd d:\THUMMAR\fakemail\app && npx wrangler pages deployment create --commit-dirty=true"
 
 
